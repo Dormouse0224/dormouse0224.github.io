@@ -4,16 +4,15 @@ title: About
 permalink: /about/
 ---
 
-## Theme Monos
-> Simple and lightweight theme for Jekyll
+## 김재영
+> 게임 개발을 위한 블로그
 
 ### Features
-- Responsive.
-- Syntax Highlight
-- Most optimized theme for tech blog.
-- Lightweight with minimum stylesheet.
-- Easy to customize.
-- Offers category menu.
+- 학습 내용
+- 기술적 이슈에 대한 고찰
+- 문제의 해결 과정
+- 프로젝트 과정에서의 생각
+
 
 ### _config.yml
 > Code block will look like this.
@@ -21,6 +20,7 @@ permalink: /about/
 highlighter-theme: monokai //you can change your syntax color scheme.
 date_format: "%Y-%M-%D" //and date format.
 ```
+## To run in local: bundle exec jekyll serve
 
 ### Screenshots
 #### Page

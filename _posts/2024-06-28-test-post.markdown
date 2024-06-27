@@ -1,0 +1,48 @@
+---
+layout: post
+title: test-post
+date: 2024-06-28 04:40:00 +0900
+category: C++
+---
+# test-post
+> hi, there.
+
+welcome.
+
+
+This is code
+
+{% highlight c++ %}
+#include <stdio.h>
+
+int main()
+{
+	int MaxLen = 10;
+	printf("Inverted Triangle\n");
+	for (int i = MaxLen; i > 0; --i)
+	{
+		for (int j = 0; j < i; ++j)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+
+	printf("Pyramid\n");
+	for (int i = MaxLen; i > 0; --i)
+	{
+		for (int j = 0; j < (i-1); ++j)
+		{
+			printf(" ");
+		}
+		for (int k = 0; k < (MaxLen-i+1)*2-1; ++k)
+		{
+			printf("*");
+		}
+		printf("\n");
+	}
+
+
+	return 0;
+}
+{% endhighlight %}
