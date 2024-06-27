@@ -8,11 +8,13 @@ category: C++
 > hi, there.
 
 welcome.
+I made `개쩌는코드`, `starseeker` with c++.
+어소트락에서 배우는 중입니다.
 
 
 This is code
 
-{% highlight c++ %}
+```cpp
 #include <stdio.h>
 
 int main()
@@ -45,4 +47,9 @@ int main()
 
 	return 0;
 }
-{% endhighlight %}
+```
+
+
+자세한 정보는 [링크][link1]에서 확인하세요.
+
+[link1]: https://www.naver.com/
