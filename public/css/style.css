@@ -112,7 +112,7 @@ code {
 }
 
 .sidebar-brand > a {
-	font-size: 300%;
+	font-size: 200%;
 	font-family: 'Gelasio';
 	color: #fff;
 }
@@ -131,7 +131,7 @@ code {
 }
 
 .nav-title {
-	font-size: 100%;
+	font-size: 120%;
 	font-family: "Noto Sans";
 	text-transform: uppercase;
 	border-bottom: 1px solid gray;
@@ -139,7 +139,7 @@ code {
 }
 
 a.nav-item {
-	font-size: 120%;
+	font-size: 100%;
 	font-family: "Noto Sans";
 	text-transform: capitalize;
 	color: #aaa;
@@ -147,7 +147,7 @@ a.nav-item {
 
 a.nav-item:hover { color: #777; }
 
-.badge { font-size: 70%; }
+.badge { font-size: 80%; }
 .badge::before { content: "("; }
 .badge::after { content: ")"; }
 
@@ -156,7 +156,7 @@ a.nav-item:hover { color: #777; }
 
 .post-link {
 	margin-left: 10px;
-	font-size: 110%;
+	font-size: 130%;
 	color: #333;
 }
 
@@ -203,10 +203,10 @@ article .share .gplus:hover {
 }
 
 article {
-	padding: 0 5% 0;
-	font-size: 17px;
-	margin-bottom: 100px;
-	line-height: 1.9;
+	padding: 0 1% 0;
+	font-size: 20px;
+	margin-bottom: 200px;
+	line-height: 2.0;
 }
 
 article.home div a, article.home pre a { color: #2c3e50; }
@@ -262,7 +262,7 @@ header.home {
 }
 
 .post-title {
-	font-size: 1.5em;
+	font-size: 2em;
 	color: #111;
 	font-weight: bold;
 }
@@ -271,9 +271,9 @@ header.home {
 	text-transform: uppercase;
 	color: #555;
 	letter-spacing: 1px;
-	font-size: 0.8em;
+	font-size: 1em;
 	display: inline-block;
-	width: 80px;
+	width: 120px;
 }
 
 .author .author-image {
