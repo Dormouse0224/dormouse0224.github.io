@@ -52,7 +52,7 @@ category: C++
 |malloc(_size)|free(_block)|동적 메모리 할당|_size: 힙에 할당 될 메모리의 크기(바이트) <br> _block: 할당 된 메모리 블록|
 |calloc(_count, _size)|동적 메모리 할당과 동시에 0으로 초기화|free(_block)|_count: 메모리에 할당 할 요소 개수 <br> _size: 요소의 크기(바이트) <br> _block: 할당 된 메모리 블록|
 |realloc(_block, _size)|free(_block)|malloc/calloc으로 할당 된 메모리 재할당|_block: 할당 된 메모리 블록 <br> _size: 힙에 할당 될 메모리의 크기(바이트)|
-|new|delete(array의 경우 delete[])|동적 메모리 할당|(키워드이다)|
+|new|delete(array의 경우 delete[])|동적 메모리 할당, class 에서 생성자가 호출됨|(키워드이다)|
 
 
 <br>
