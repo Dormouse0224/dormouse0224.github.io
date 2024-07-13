@@ -29,6 +29,8 @@ category: Data_Structure
 
 예를 들어, $O(1)$은 데이터 개수에 영향을 받지 않는 상수 시간복잡도를 가진다는 뜻이며, $O(n)$은 데이터 개수 n에 비례하여 연산량 및 소요 시간이 증가한다는 의미이다.
 
+---
+
 <br><br>
 
 >### 2. 종류
@@ -47,3 +49,4 @@ category: Data_Structure
         - 힙(Heap)
 - 해시 테이블(Hash table)
 
+---
