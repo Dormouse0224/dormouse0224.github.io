@@ -77,7 +77,7 @@ category: Data_Structure
 |~Vector()|소멸자, 메모리 할당 해제|
 
 
-
+<br>
 
 <details>
 <summary>코드 접기/펼치기</summary>
