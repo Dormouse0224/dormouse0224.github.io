@@ -81,9 +81,9 @@ category: Data_Structure
 
 <details>
 <summary>코드 접기/펼치기</summary>
+<div markdown="1">
 
-
-```cpp
+``` cpp
 
 #pragma once
 
@@ -237,6 +237,7 @@ public:
 
 ```
 
+</div>
 </details>
 
 ---
