@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Data Structure 2. 리스트
-date: 2024-07-09 18:00:00 +0900
+date: 2024-07-14 18:00:00 +0900
 category: Data_Structure
 ---
 
