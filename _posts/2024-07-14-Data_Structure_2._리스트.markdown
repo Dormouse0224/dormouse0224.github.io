@@ -40,6 +40,268 @@ C++의 STL에서 `list` 라는 템플릿을 제공한다.
 
 >### 2. 연결 리스트 구현
 
+- 노드 구조체
 
+|구현 멤버|설명|
+|---|---|
+|T data|자료형 T 데이터|
+|Node<T>* pPrevNode|이전 노드를 가리키는 포인터|
+|Node<T>* pNextNode|다음 노드를 가리키는 포인터|
+
+- 리스트 클래스
+
+|구현 멤버|설명|
+|---|---|
+|Node<T>* pHeadNode|첫 노드의 주소를 저장하는 포인터|
+|int dataCount|리스트가 관리중인 데이터 개수|
+|List()|기본 생성자|
+|List(const List& _copy)|복사 생성자|
+|~List()|소멸자, 호출 시 저장된 데이터를 순차적으로 메모리 해제|
+|void push_back(T _input)|입력받은 데이터를 리스트의 가장 뒤쪽에 노드를 추가하여 삽입|
+|void push_front(T _input)|입력받은 데이터를 리스트의 가장 앞쪽에 노드를 추가하여 삽입, 헤드 노드 갱신|
+|iterator begin()|시작 노드를 가리키는 이터레이터를 반환하는 함수|
+|iterator end()|마지막 데이터 그 다음 노드를 가리키는 이터레이터를 반환하는 함수.
+|iterator insert(iterator _where, T _data)|입력받은 이터레이터가 가리키는 데이터 앞에 입력받은 데이터 노드를 삽입|
+|iterator erase(iterator _where)|입력받은 이터레이터가 가리키는 데이터 노드를 삭제|
+
+
+- 이터레이터 이너클래스
+
+|구현 멤버|설명|
+|---|---|
+|Node<T>* pPointingNode|이터레이터가 가리키고 있는 데이터 노드의 주소|
+|bool isValid|이터레이터가 유효한지 저장하는 bool 변수|
+|List<T>* pHandlerList|이터레이터가 가리키는 데이터가 속한 리스트의 주소|
+
+
+
+
+
+<br>
+
+<details>
+<summary>코드 접기/펼치기</summary>
+<div markdown="1">
+
+
+```cpp
+
+#pragma once
+
+#include <assert.h>
+
+
+// 리스트의 노드 스트럭트 템플릿
+
+template <typename T>
+struct Node
+{
+	T data;
+	Node<T>* pPrevNode;
+	Node<T>* pNextNode;
+};
+
+
+// 리스트 본체 클래스 템플릿
+
+template <typename T>
+class List
+{
+private:
+	Node<T>* pHeadNode;
+	int dataCount;
+
+public:
+	// 생성자 및 소멸자
+	List()
+		: pHeadNode(nullptr), dataCount(0) {}
+
+	List(const List& _copy)
+		: pHeadNode(_copy.pHeadNode), dataCount(_copy.dataCount)
+	{
+		if (pHeadNode == nullptr) {
+			dataCount = 0;
+		}
+	}
+
+	~List() {
+		Node<T>* pNextNode = pHeadNode;
+		while (pNextNode == nullptr)
+		{
+			Node<T>* pDeleteNode = pNextNode;
+			pNextNode = pNextNode->pNextNode;
+			delete pDeleteNode;
+		}
+	}
+
+
+	// 기본 함수
+
+	void push_back(T _input) {
+		Node<T>* newNode = new Node<T>;
+		newNode->data = _input;
+		newNode->pNextNode = nullptr;
+		if (dataCount == 0) {
+			newNode->pPrevNode = nullptr;
+			pHeadNode = newNode;
+		}
+		else {
+			Node<T>* pLastNode = pHeadNode;
+			while (pLastNode->pNextNode != nullptr) {
+				pLastNode = pLastNode->pNextNode;
+			}
+			newNode->pPrevNode = pLastNode;
+			pLastNode->pNextNode = newNode;
+		}
+		dataCount++;
+	}
+
+	void push_front(T _input) {
+		Node<T>* newNode = new Node<T>;
+		newNode->data = _input;
+		newNode->pPrevNode = nullptr;
+		if (dataCount == 0) {
+			newNode->pNextNode = nullptr;
+		}
+		else {
+			newNode->pNextNode = pHeadNode;
+			pHeadNode->pPrevNode = newNode;
+		}
+		pHeadNode = newNode;
+		dataCount++;
+	}
+
+
+	// 이터레이터 활용 함수
+
+	class iterator;
+
+	iterator begin() {
+		return iterator(this->pHeadNode, this);
+	}
+
+	iterator end() {
+		return iterator(nullptr, this);
+	}
+
+	iterator insert(iterator _where, T _data) {
+		Node<T>* newNode = new Node<T>;
+		newNode->data = _data;
+		newNode->pNextNode = _where.pPointingNode;
+		newNode->pPrevNode = _where.pPointingNode->pPrevNode;
+		if (newNode->pNextNode != nullptr) {
+			newNode->pNextNode->pPrevNode = newNode;
+		}
+		if (newNode->pPrevNode != nullptr) {
+			newNode->pPrevNode->pNextNode = newNode;
+		}
+		else {
+			this->pHeadNode = newNode;
+		}
+		iterator newiter(_where);
+		_where.isValid = false;
+		this->dataCount++;
+		return newiter;
+	}
+
+
+	iterator erase(iterator _where) {
+		assert(_where.isValid || this->dataCount != 0);
+
+		Node<T>* prevNode = _where.pPointingNode->pPrevNode;
+		Node<T>* nextNode = _where.pPointingNode->pNextNode;
+		if (prevNode != nullptr){
+			prevNode->pNextNode = nextNode;
+		}
+		else {
+			this->pHeadNode = nextNode;
+		}
+		if (nextNode != nullptr){
+			nextNode->pPrevNode = prevNode;
+		}
+		iterator newiter(_where);
+		newiter.pPointingNode = nextNode;
+		delete _where.pPointingNode;
+		_where.isValid = false;
+
+		this->dataCount--;
+		return  newiter;
+	}
+
+	// 이너클래스 이터레이터 구현
+
+	class iterator
+	{
+		friend List;
+	private:
+		Node<T>* pPointingNode;
+		bool isValid;
+		List<T>* pHandlerList;
+
+
+		// 이터레이터의 생성자 및 소멸자
+
+	public:
+		iterator()
+			: pPointingNode(nullptr), isValid(true), pHandlerList(nullptr){}
+
+		iterator(const iterator& _copy)
+			: pPointingNode(_copy.pPointingNode), isValid(_copy.isValid), pHandlerList(_copy.pHandlerList){}
+
+		iterator(Node<T>* _node, List<T>* _list)
+			: pPointingNode(_node), isValid(true), pHandlerList(_list) {}
+
+
+		// 이터레이터 연산자 오버로딩
+
+		iterator& operator ++() {
+			assert(pPointingNode != nullptr || isValid);
+
+			pPointingNode = pPointingNode->pNextNode;
+
+			return *this;
+		}
+
+		iterator operator ++(int) {
+			assert(pPointingNode != nullptr || isValid);
+
+			iterator iter(*this);
+			pPointingNode = pPointingNode->pNextNode;
+
+			return iter;
+		}
+
+		iterator& operator --() {
+			assert(pPointingNode != nullptr || isValid || pPointingNode->pPrevNode != nullptr);
+
+			pPointingNode = pPointingNode->pPrevNode;
+
+			return *this;
+		}
+
+		iterator operator --(int) {
+			assert(pPointingNode != nullptr || isValid || pPointingNode->pPrevNode != nullptr);
+
+			iterator iter(*this);
+			pPointingNode = pPointingNode->pPrevNode;
+
+			return iter;
+		}
+
+		bool operator ==(const iterator _other) {
+			return (pPointingNode == _other.pPointingNode);
+		}
+
+		bool operator !=(const iterator _other) {
+			return !(pPointingNode == _other.pPointingNode);
+		}
+
+		T& operator*() {
+			return pPointingNode->data;
+		}
+	};
+};
+
+```
 
 ---
