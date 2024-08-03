@@ -2,7 +2,7 @@
 layout: post
 title: Data Structure 0. 자료구조
 date: 2024-07-09 17:00:00 +0900
-category: Data Structure
+category: Data_Structure
 ---
 
 ## 0. 자료구조

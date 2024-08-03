@@ -2,7 +2,7 @@
 layout: post
 title: Data Structure 2. 리스트
 date: 2024-07-14 18:00:00 +0900
-category: Data Structure
+category: Data_Structure
 ---
 
 ## 1. 배열
