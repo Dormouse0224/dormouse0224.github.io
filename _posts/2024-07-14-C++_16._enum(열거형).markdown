@@ -1,0 +1,123 @@
+---
+layout: post
+title: C++ 16. enum (열거형)
+date: 2024-07-29 21:00:00 +0900
+category: C++
+---
+
+## 15. 반복자
+
+1. [정의](#1-정의)
+2. [특징](#2-특징)
+
+---
+
+<br><br>
+
+>###  1. 정의
+
+추가로, switch 조건문과 같이 잘 쓰이는 것이 열거형(enum)이다.
+
+열거형은 말 그대로 사용자가 직접 열거하여 정의하는 자료형이다. 열거형으로 선언된 변수는 열거형에 지정된 값만 넣을 수 있으며, 4바이트 정수 타입이다.
+
+열거형에서 선언되는 변수들은 선언 시 정수로 초기화할 수 있으며, 사용자가 지정하여 초기화하지 않을 경우 최초 변수는 0부터, 이후의 변수는 앞 변수 값에 1을 더한 값이 할당된다.
+
+<br>
+
+enum 뒤에 class를 붙이지 **않고** 열거형을 선언할 수 도 있지만, 이 경우 열거형 내부에 선언된 변수의 이름이 중복되면 컴파일 중 **재정의 오류**가 발생한다.
+
+따라서 열거형을 선언할 때에는 되도록 class 를 붙이는 것을 권장한다.
+
+enum class 의 경우 명시적 형변환이 필요하다.
+
+```cpp
+enum class State
+{
+	bleed,	// 0 할당
+	iced = 1 << 1,	// 2 할당
+	fired = 1 << 2,	// 4 할당
+	chaos,		// 5 할당
+	stunned,	// 6 할당
+};
+
+
+int main()
+{
+	State player_state = State::chaos;
+
+	switch (player_state)
+	{
+	case State::bleed:
+		cout << "bleed\n";
+		break;
+	case State::iced:
+		cout << "iced\n";
+		break;
+	case State::fired:
+		cout << "fired\n";
+		break;
+	case State::chaos:
+		cout << "chaos\n";      //chaos 가 출력됨
+		break;
+	case State::stunned:
+		cout << "stunned\n";
+		break;
+	default:
+		break;
+	}
+
+	return 0;
+}
+```
+
+---
+
+
+<br><br>
+
+>###  2. 특징
+
+
+열거형은 전처리기 `#define` 과 비슷하게 동작하는 것 처럼 보이지만, 차이점이 있다.
+
+전처리기 `#define` 은 말그대로 전처리기이기 때문에 컴파일되기 전에 먼저 처리하여 해당 구문에 일치하는 변수들을 미리 치환해 둔다.
+
+그래서 이후 디버깅 중 어떤 변수에 전처리기를 이용한 값을 넣을 경우 치환된 값 자체로 보이게 되어, 프로그램이 의도대로 동작하는지 한눈에 알기 어렵다.
+
+<br>
+
+예를 들어, `#define BURN 1` 으로 전처리기를 이용해 사전에 정의한 값을 `int state = BURN` 처럼 변수에 값을 넣었다고 하자.
+
+이 경우 디버깅 중에는 state 변수 안에 int 값 1이 들어가있는 것으로 보인다.
+
+다만 열거형을 이용할 경우 `state = (int)STATE::ICED` 로 값을 대입하면 이후 디버깅 중 `STATE::ICED` 의 값 0 이 아닌 `STATE::ICED` 자체를 확인할 수 있다.
+
+이는 디버깅 중 코드의 가시성을 향상시키기에 프로그램이 의도대로 동작하는지 확인하기 쉬워진다.
+
+<br>
+
+다만 전처리기 `#define` 는 열거형이라는 자료형에 한정되지 않기에 훨씬 다양한 사용처에서 쓰인다.
+
+
+```cpp
+
+#define BURN 1
+
+enum class STATE {
+	ICED
+};
+
+int main() {
+
+	int state1 = BURN;	// int 값 1로 저장됨
+
+	STATE state2(STATE::ICED);	// ICED(0) 으로 저장됨. 실제로 ICED는 0이지만 값이 ICED 임을 알 수 있으며, 타입은 STATE이다.
+
+	return 0;
+}
+
+```
+
+
+
+---
