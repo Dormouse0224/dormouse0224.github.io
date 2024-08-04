@@ -9,7 +9,6 @@ category: C++
 1. [조건문](#조건문)
     1. [if-else](#1-if-else)
     2. [switch-case](#2-switch-case)
-        - [enum](#--enum)
 2. [반복문](#반복문)
     1. [for](#1-for)
         - [예제: 점 찍기](#--예제-점-찍기)
@@ -83,60 +82,6 @@ int main()
 		cout << "LL is nothing\n";
 		break;
 	}
-}
-```
-
-#### - enum
-
-추가로, switch 조건문과 같이 잘 쓰이는 것이 열거형(enum)이다.
-
-열거형은 말 그대로 사용자가 직접 열거하여 정의하는 자료형이다. 열거형으로 선언된 변수는 열거형에 지정된 값만 넣을 수 있으며, 4바이트 정수 타입이다.
-
-열거형에서 선언되는 변수들은 선언 시 정수로 초기화할 수 있으며, 사용자가 지정하여 초기화하지 않을 경우 최초 변수는 0부터, 이후의 변수는 앞 변수 값에 1을 더한 값이 할당된다.
-
-<br>
-
-enum 뒤에 class를 붙이지 **않고** 열거형을 선언할 수 도 있지만, 이 경우 열거형 내부에 선언된 변수의 이름이 중복되면 컴파일 중 **재정의 오류**가 발생한다.
-
-따라서 열거형을 선언할 때에는 되도록 class 를 붙이는 것을 권장한다.
-
-```cpp
-enum class State
-{
-	bleed,	// 0 할당
-	iced = 1 << 1,	// 2 할당
-	fired = 1 << 2,	// 4 할당
-	chaos,		// 5 할당
-	stunned,	// 6 할당
-};
-
-
-int main()
-{
-	State player_state = State::chaos;
-
-	switch (player_state)
-	{
-	case State::bleed:
-		cout << "bleed\n";
-		break;
-	case State::iced:
-		cout << "iced\n";
-		break;
-	case State::fired:
-		cout << "fired\n";
-		break;
-	case State::chaos:
-		cout << "chaos\n";      //chaos 가 출력됨
-		break;
-	case State::stunned:
-		cout << "stunned\n";
-		break;
-	default:
-		break;
-	}
-
-	return 0;
 }
 ```
 
