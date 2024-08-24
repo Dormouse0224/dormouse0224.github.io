@@ -11,6 +11,7 @@ category: Data_Structure
 2. [이진 트리 (binary tree)](#2-이진-트리-binary-tree)
 3. [이진 탐색 트리 (binary search tree)](#2-이진-탐색-트리-binary-search-tree)
 4. [BST 함수 알고리즘](#4-bst-함수-알고리즘)
+
 ---
 
 <br><br>
