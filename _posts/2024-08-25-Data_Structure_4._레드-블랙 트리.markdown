@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Data Structure 4. 레드-블랙 트리
-date: 2024-07-14 18:00:00 +0900
+date: 2024-08-25 18:00:00 +0900
 category: Data_Structure
 ---
 
