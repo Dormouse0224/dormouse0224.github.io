@@ -1,0 +1,193 @@
+---
+layout: post
+title: WinAPI 3. 이미지 로드
+date: 2024-09-23 18:00:00 +0900
+category: WinAPI
+---
+
+## 3. 이미지 로드
+
+1. [이미지 로드 - LoadImage()](#1-이미지-로드---loadimage)
+2. [이미지 로드 - GDI+](#2-이미지-로드---gdi)
+3. [GDI+ 라이브러리 오류](#3-gdi-라이브러리-오류)
+
+---
+
+<br><br>
+
+>### 1. 이미지 로드 - LoadImage()
+
+프로그램에서 사용할 리소스 중 이미지 파일을 디렉토리에서 불러와야 하는 경우, 두 가지 방법을 사용할 수 있다.
+
+첫번째는 `LoadImage()` 함수를 사용하는 것이다.
+
+<br>
+
+```cpp
+
+HANDLE LoadImageW(
+  [in, optional] HINSTANCE hInst,
+  [in]           LPCWSTR   name,
+  [in]           UINT      type,
+  [in]           int       cx,
+  [in]           int       cy,
+  [in]           UINT      fuLoad
+);
+
+```
+
+<br>
+
+ MSDN 에 따르면 `LoadImage()` 함수는 위와 같은 인자를 가지고 있다.
+
+- **hInst**
+
+로드할 이미지가 포함된 DLL 또는 실행 파일(.exe)의 모듈에 대한 핸들로, 미리 정의된 이미지 또는 독립 실행형 리소스(아이콘, 커서 또는 비트맵 파일)를 로드하려면 nullptr 을 입력해 주면 된다.
+
+이번에 다루는 내용은 디렉토리 내에서 존재하는 이미지 리소스 파일을 불러와 로드하는 것이기 때문에 nullptr 로 설정한다.
+
+- **name**
+
+디렉토리의 경로를 입력한다. 리소스 파일의 절대 경로가 들어가야 하므로, 상대 경로값과 `GetCurrentDirectory()` 함수를 사용하여 절대 경로로 변환해 사용하는 것을 권장한다.
+
+- **type**
+
+로드할 이미지의 형식이다. 이미지 리소스를 로드할 것이기 때문에 비트맵 형식인 `IMAGE_BITMAP` 을 넣어준다.
+
+- **cx**, **cy**
+
+로드할 이미지의 크기이다. 이미지 전체를 로드하고 싶은 경우, 각각 0을 넣어주면 된다.
+
+- **fuLoad**
+
+로드에 사용되는 플래그이다. 파일에서 이미지를 로드할 것이기 때문에 `LR_LOADFROMFILE` 을 넣어준다.
+
+자세한 내용은 MSDN의 [LoadImageW 함수(winuser.h)][1] 문서를 참고하자.
+
+<br>
+
+다만, `LoadImage()` 함수의 단점이 있는데, 오직 .bmp 형식의 파일만 읽어 올 수 있다는 점이다.
+
+만약 로드할 이미지 리소스의 파일 형식이 .png, .jpg 등의 형식일 경우 아래의 GDI+를 사용한 이미지 로드를 사용해야 한다.
+
+---
+
+<br><br>
+
+>### 2. 이미지 로드 - GDI+
+
+.bmp 외에도 .png, .jpg 등의 이미지 파일도 로드하기 위해서는 GDI+ 를 이용하여 이미지를 로드해야 한다.
+
+현재 WinAPI 프로젝트에 사용되는 리소스가 .png 형식으로 이루어져 있기 때문에 이후 대부분 이미지 리소스는 GDI+를 사용해 로드할 예정이다.
+
+<br>
+
+먼저 GDI+를 사용하기 위해서는 `<gdiplius.h>` 헤더를 인클루드하고 라이브러리를 연결해 주어야 한다.
+추가적으로 Gdiplus 네임스페이스를 선언해 준다. 해당 이름공간에 GDI+에 사용되는 헤더가 포함되어 있기에 하는 것을 권장한다.
+
+편의를 위해 아래의 선언을 이전에 만들어 둔 미리 컴파일된 헤더 `pch.h` 파일에 넣어 모든 파일에서 GDI+를 사용할 수 있도록 한다.
+
+<br>
+
+```cpp
+
+#include <gdiplus.h>
+#pragma comment (lib, "Gdiplus.lib")
+
+using namespace Gdiplus;
+```
+
+<br>
+
+이후 파일에서 GDI+를 사용하는 경우 GDI+ 관련 데이터를 선언해 주어야 한다.
+
+```cpp
+// GDI+ 초기화
+GdiplusStartupInput GdiplusStartupInput;
+ULONG_PTR GdiplusToken;
+
+// GDI+를 사용하는 함수는 반드시 사용 전 이 함수를 호출해야 함
+GdiplusStartup(&GdiplusToken, &GdiplusStartupInput, nullptr);
+
+```
+
+<br>
+
+이제 이미지 로드를 위한 GDI+ 사용의 사전 작업은 끝났다.
+
+이후에는 `Image` 객체에 리소스 파일을 로드하고 이미지를 렌더링할 비트맵의 DC 핸들을 `Graphics` 객체에 전달한 뒤, `Graphics` 객체의 함수를 통해 `Image` 객체를 렌더링하면 된다.
+
+`Image` 클래스는 이미지를 다루는 클래스로, 이미지의 크기, 색상표, 픽셀형식, 파일형식 등 이미지 데이터에 대한 다양한 정보와 이를 지원하는 메서드를 지원한다.
+
+`Graphics` 클래스는 선, 곡선, 그림, 이미지 및 텍스트를 그리는 메서드를 제공한다.
+
+각각의 클래스에 대한 자세한 정보는 MSDN의 [Image 클래스][2], [그래픽 클래스(gdiplusgraphics.h)][3] 문서를 참고하자.
+
+<br>
+
+```cpp
+
+// 로딩할 텍스쳐 리소스 경로 설정
+GetCurrentPath(path)
+path = path + L"\\resource\\texture\\" + CBase::GetName();
+
+// 이미지 로드
+m_Image = new Image(path.c_str());
+
+
+// 로드된 이미지를 렌더링
+m_DC = CEngine::GetInst()->GetSubDC();
+Graphics graphics(m_DC);
+if (m_Size.x == 0.f && m_Size.y == 0.f)
+{
+	// 이미지를 m_Owner 객체의 위치에 렌더링
+	graphics.DrawImage(m_Image, (int)m_Owner->GetLocation().x, (int)m_Owner->GetLocation().y);
+}
+else
+{
+	// 이미지를 m_Size 크기로 리사이징
+	graphics.DrawImage(m_Image, (int)m_Owner->GetLocation().x, (int)m_Owner->GetLocation().y, (int)m_Size.x, (int)m_Size.y);
+}
+
+```
+
+<br>
+
+마지막으로 로드된 이미지는 `Image` 객체로 동적할당 되었으므로 메모리를 해제해 주어야 한다.
+
+```cpp
+
+delete m_Image;
+
+```
+
+---
+
+<br><br>
+
+>### 3. GDI+ 라이브러리 오류
+
+GDI+ 헤더를 인클루드하고 라이브러리를 연결하면 아래와 같은 오류가 뜨는 경우가 있다.
+
+![image](public\img\gdiplus_include_error_0.png)
+
+GDI+를 사용하기 위해 헤더 하나 인클루드했더니 2000개가 넘는 오류가 터져나와 당황스러웠다...
+
+일단 해당 문제는 아래의 코드 때문에 발생하는 문제이다.
+
+![image](public\img\gdiplus_include_error_1.png)
+
+```cpp
+#define WIN32_LEAN_AND_MEAN
+```
+
+문제가 되는 `#define WIN32_LEAN_AND_MEAN` 코드는 프로젝트 생성 시 기본으로 생성되는 `framework.h` 에서 찾을 수 있다.
+이는 주석에서 설명하듯 거의 사용되지 않는 헤더를 제외하고 컴파일을 시행하는데, 이 "거의 사용되지 않는 헤더"에 GDI+가 사용하는 헤더가 포함되어 발생하는 문제이다.
+
+간단하게 해당 `#define WIN32_LEAN_AND_MEAN` 구문을 주석처리하거나, GDI+ 헤더와 함께 `#include <ole2.h>` 헤더를 인클루드 해 주면 선언 오류가 해결된다.
+
+---
+
+[1](https://learn.microsoft.com/ko-kr/windows/win32/api/winuser/nf-winuser-loadimagew)
+[2](https://learn.microsoft.com/ko-kr/dotnet/api/system.drawing.image?view=windowsdesktop-7.0)
+[3](https://learn.microsoft.com/ko-kr/windows/win32/api/gdiplusgraphics/nl-gdiplusgraphics-graphics)
