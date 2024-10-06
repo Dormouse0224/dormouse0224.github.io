@@ -2,7 +2,7 @@
 layout: post
 title: WinAPI 1. 싱글톤
 date: 2024-08-30 18:00:00 +0900
-category: WinAPI
+category: WinAPI & 던파 모작
 ---
 
 ## 1. 싱글톤

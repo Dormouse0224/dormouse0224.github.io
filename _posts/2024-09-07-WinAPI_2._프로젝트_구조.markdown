@@ -2,7 +2,7 @@
 layout: post
 title: WinAPI 2. 프로젝트 구조
 date: 2024-09-07 18:00:00 +0900
-category: WinAPI
+category: WinAPI & 던파 모작
 ---
 
 ## 2. 프로젝트 구조
