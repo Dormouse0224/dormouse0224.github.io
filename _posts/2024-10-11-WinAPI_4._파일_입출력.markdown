@@ -1,0 +1,125 @@
+---
+layout: post
+title: WinAPI 4. 파일 입출력
+date: 2024-10-11 12:00:00 +0900
+category: WinAPI_DNF
+---
+
+## 4. 파일 입출력
+
+1. [1. 파일 입출력 - ifstream, ofstream](#1-파일-입출력---ifstream-ofstream)
+2. [2. 응용](#2-응용)
+
+---
+
+<br><br>
+
+>### 1. 파일 입출력 - ifstream, ofstream
+
+파일의 입력과 출력은 스트림을 통해 관리되고, 사용자는 스트림을 열어서 파일을 관리할 수 있다.
+
+ifstream 은 파일을 읽어들이는 스트림 클래스로, 이를 통해 파일 스트림을 열어서 읽어들일 수 있다.
+
+ifstream::open(const char*, ios::openmode) 함수는 첫번째 인자로 파일의 경로를 받고, 두번째 인자로 파일을 어떻게 읽을 것인지를 받는다.
+
+만약 파일을 바이너리 데이터로 읽고 싶다면, std::ios::binary 모드를 사용하면 된다. ([MSDN][1])
+
+<br>
+
+ostream 은 파일을 내보내는 스트림 클래스이며, 파일을 쓴 후 내보내는 데 주로 사용된다.
+
+파일을 쓰는 함수 write() 는 출력할 데이터 버퍼 char* 와 그 크기를 입력받는데, 반드시 배열 타입이어야 하는 것은 아니다.
+
+예를 들어, 구조체를 선언해서 구조체 단위로 파일을 한번에 읽고 쓸 수 있다.
+
+<br>
+
+파일 입출력에서 가장 중요한 것은 마지막에 열었던 스트림을 close() 로 닫는 것이다.
+스트림을 닫지 않으면 예기치 못한 문제가 발생할 수 있으니 반드시 닫아주도록 하자.
+
+---
+
+<br><br>
+
+>### 2. 응용
+
+파일 입출력을 응용하여, 프로그램 시작 시 마지막 종료 전 저장해 둔 윈도우 위치와 해상도를 불러오는 기능을 구현했다.
+
+<br>
+
+```cpp
+// 프로그램 시작 시 Engine 의 초기화 과정 중 윈도우 위치와 해상도 정보를 가져온다.
+ifstream DataFile;
+DataFile.open("DNF_program.data", ios::binary);
+// 파일이 열리지 않았을 경우 (해단 파일이 존재하지 않는 경우 등)
+if (!DataFile.is_open())  
+{
+  // 기본값을 저장한 파일을 내보낸다.
+	ofstream DataFile2;
+	DataFile2.open("DNF_program.data", ios::binary);
+	ProgramInfo info2;
+	info2.Resolution = Vec2D(CEngine::GetInst()->GetResolution().x, CEngine::GetInst()->GetResolution().y);
+	info2.WindowPos = m_MainWndPos;
+	info2.Scale = CEngine::GetInst()->GetScreenScale();
+	DataFile2.write((char*)&info2, sizeof(info2));
+	DataFile2.close();
+  // 기본값을 저장한 뒤 파일 스트림을 반드시 닫아준다.
+  // 다시 파일을 열고 ProgramInfo 구조체로 파일을 한번에 읽어들인다.
+  DataFile.open("DNF_program.data", ios::binary);
+}
+ProgramInfo info;
+DataFile.read((char*)&info, sizeof(info));
+DataFile.close();
+
+m_Resolution = info.Resolution;
+m_ScreenScale = info.Scale;
+m_MainWndPos = info.WindowPos;
+
+
+// 프로그램 종료 메세지가 호출되면 파일에 윈도우 위치와 해상도 정보를 저장한다.
+case WM_DESTROY:
+{
+    PostQuitMessage(0);
+
+    // 종료 전 창 크기와 위치 기억
+    ofstream DataFile;
+    DataFile.open("DNF_program.data", ios::binary);
+    ProgramInfo info;
+    info.Resolution = Vec2D(CEngine::GetInst()->GetResolution().x, CEngine::GetInst()->GetResolution().y);
+    RECT rect;
+    GetWindowRect(CEngine::GetInst()->GetMainWnd(), &rect);
+    info.WindowPos = Vec2D(rect.left, rect.top);
+    info.Scale = CEngine::GetInst()->GetScreenScale();
+    DataFile.write((char*)&info, sizeof(info));
+    DataFile.close();
+}
+
+
+
+// 사용된 ProgramInfo 구조체
+// pregma pack 을 이용해 데이터 패딩에 의한 공간 낭비를 최대한 줄인다.
+#pragma pack(push, 1)
+struct ProgramInfo
+{
+public:
+	Vec2D Resolution;   // Vec2D 는 float 2개를 사용하는 2차원 좌표를 나타내는 구조체이다.
+	Vec2D WindowPos;
+	float Scale;
+};
+#pragma pack(pop)
+// 구조체당 총 20 바이트를 사용한다.
+
+```
+
+해당 코드에서는 초기 실행 시 파일이 없는 것 등을 고려하여 파일 open 에 실패하면 기본 파일을 작성하도록 되어 있다.
+
+하지만 이 경우 손상된 파일은 open 되어 잘못된 값을 읽어들일 수 있다.
+
+이를 위해 파일 무결성 검사를 시행하는 기능을 추가하면 예외 상황을 처리할 수 있다.
+
+파일 무결성 검사는 간단하게 체크섬(checksum) 방식을 이용해서 데이터 무결성 검사용 체크섬 바이트를 넣거나, SHA-256 등의 해시 알고리즘을 이용해서 해시값을 비교하여 무결성 검사를 하는 방법 등이 있다.
+
+
+---
+
+[1](https://learn.microsoft.com/ko-kr/cpp/standard-library/ios-base-class?view=msvc-170#openmode)
