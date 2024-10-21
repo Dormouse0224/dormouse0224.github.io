@@ -50,6 +50,7 @@ category: Project_Dungeon&Fighter
 #### - 사전 준비 및 학습 (09.07 ~ 10.23)
 
 > 자체 엔진 제작
+
 > Texture & Animation 에디터
 
 
@@ -61,11 +62,17 @@ category: Project_Dungeon&Fighter
 #### - 1주차 (10.24 ~ 10.30)
 
 > Dungeon Maker & Stage 에디터
+
 > 일반 몬스터
+
 > NPC
+
 > 포탈 및 장애물 오브젝트
+
 > 플레이어 캐릭터 FSM
+
 > HUD
+
 > 커맨드
 
 
@@ -76,7 +83,9 @@ category: Project_Dungeon&Fighter
 #### - 2주차 (10.31 ~ 11.06)
 
 > 보스 스테이지
+
 > 보스 몬스터 "해방된 라르고" 스킬
+
 > 보스 몬스터 "해방된 라르고" FSM
 
 
@@ -87,6 +96,7 @@ category: Project_Dungeon&Fighter
 #### - 3주차 (11.07 ~ 10.13)
 
 > 플레이어 캐릭터 "트래블러" 스킬
+
 > 스킬 HUD
 
 
@@ -97,6 +107,7 @@ category: Project_Dungeon&Fighter
 #### - 4주차 (11.14 ~ 11.20)
 
 > UI
+
 
 
 ---
