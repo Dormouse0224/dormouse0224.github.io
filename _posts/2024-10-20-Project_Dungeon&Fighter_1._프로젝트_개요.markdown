@@ -185,7 +185,7 @@ category: Project_Dungeon&Fighter
 스테이지 메이커는 던전에 속하는 스테이지를 직접 편집할 수 있는 기능이다.
 
 
-![alt text](../public/img/StageMaker.png)
+![alt text](public\img\StageMaker.png)
 
 
 위 사진과 같이, 추가적으로 스테이지 메이커용 조작 패널 다이얼로그가 제공되며, 이 다이얼로그 창을 통해 몬스터, NPC, 투명 벽의 추가, 선택한 오브젝트의 크기 및 위치 편집 또는
