@@ -122,4 +122,4 @@ public:
 
 ---
 
-[1](https://learn.microsoft.com/ko-kr/cpp/standard-library/ios-base-class?view=msvc-170#openmode)
+[1]:https://learn.microsoft.com/ko-kr/cpp/standard-library/ios-base-class?view=msvc-170#openmode
