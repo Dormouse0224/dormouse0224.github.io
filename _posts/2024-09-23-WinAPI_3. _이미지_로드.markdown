@@ -169,13 +169,13 @@ delete m_Image;
 
 GDI+ 헤더를 인클루드하고 라이브러리를 연결하면 아래와 같은 오류가 뜨는 경우가 있다.
 
-![alt text](public\img\gdiplus_include_error_0.png)
+![alt text](\public\img\gdiplus_include_error_0.png)
 
 GDI+를 사용하기 위해 헤더 하나 인클루드했더니 2000개가 넘는 오류가 터져나와 당황스러웠다...
 
 일단 해당 문제는 아래의 코드 때문에 발생하는 문제이다.
 
-![alt text](public\img\gdiplus_include_error_1.png)
+![alt text](\public\img\gdiplus_include_error_1.png)
 
 ```cpp
 #define WIN32_LEAN_AND_MEAN
