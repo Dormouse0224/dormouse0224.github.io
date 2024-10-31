@@ -75,6 +75,7 @@ category: Project_Dungeon&Fighter
 
 > 커맨드
 
+[1주차 진행사항](https://dormouse0224.github.io/project_dungeon&fighter/2024/10/20/Project_Dungeon&Fighter_2.-1%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
 
 ---
 
