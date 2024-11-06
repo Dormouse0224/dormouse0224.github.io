@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Project Dungeon&Fighter 2. 2주차 진행사항
+title: Project Dungeon&Fighter 3. 2주차 진행사항
 date: 2024-11-06 12:00:00 +0900
 category: Project_Dungeon&Fighter
 ---
