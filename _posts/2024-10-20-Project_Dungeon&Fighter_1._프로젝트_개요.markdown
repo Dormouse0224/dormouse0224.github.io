@@ -75,7 +75,9 @@ category: Project_Dungeon&Fighter
 
 > 커맨드
 
-[1주차 진행사항](https://dormouse0224.github.io/project_dungeon&fighter/2024/10/20/Project_Dungeon&Fighter_2.-1%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
+<br>
+
+[**1주차 진행사항**](https://dormouse0224.github.io/project_dungeon&fighter/2024/10/20/Project_Dungeon&Fighter_2.-1%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
 
 ---
 
@@ -89,7 +91,9 @@ category: Project_Dungeon&Fighter
 
 > 보스 몬스터 "해방된 라르고" FSM
 
-[1주차 진행사항](https://dormouse0224.github.io/project_dungeon&fighter/2024/11/06/Project_Dungeon&Fighter_3.-2%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
+<br>
+
+[**2주차 진행사항**](https://dormouse0224.github.io/project_dungeon&fighter/2024/11/06/Project_Dungeon&Fighter_3.-2%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
 
 
 ---
