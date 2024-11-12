@@ -71,8 +71,6 @@ category: Project_Dungeon&Fighter
 
 > 플레이어 캐릭터 FSM
 
-> HUD
-
 > 커맨드
 
 <br>
@@ -104,8 +102,13 @@ category: Project_Dungeon&Fighter
 
 > 플레이어 캐릭터 "트래블러" 스킬
 
-> 스킬 HUD
+> 스킬 관련 오브젝트
 
+> HUD
+
+<br>
+
+[**3주차 진행사항**](https://dormouse0224.github.io/project_dungeon&fighter/2024/11/12/Project_Dungeon&Fighter_4.-3%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
 
 ---
 
@@ -113,7 +116,15 @@ category: Project_Dungeon&Fighter
 
 #### - 4주차 (11.14 ~ 11.20)
 
-> UI
+> UI (인벤토리, 장비창)
+
+> 스킬 HUD
+
+> NPC 상호작용 (상점, 맵이동)
+
+> 로딩 및 프레임 보완
+
+> 1~3주차 동안 미진했던 부분을 보완하기 위한 추가 작업
 
 
 
