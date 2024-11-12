@@ -39,6 +39,13 @@ category: Project_Dungeon&Fighter
 <br><br>
 
 
+![alt text](\public\img\arrow_0.png)
+
+![alt text](\public\img\arrow_1.png)
+
+![alt text](\public\img\arrow_2.png)
+
+![alt text](\public\img\arrow_3.png)
 
 
 
@@ -59,6 +66,10 @@ category: Project_Dungeon&Fighter
 
 
 
+![alt text](\public\img\arrow_collider_0.png)
+
+![alt text](\public\img\arrow_collider_1.png)
+
 
 
 **충돌 오브젝트**
@@ -73,6 +84,10 @@ category: Project_Dungeon&Fighter
 <br>
 
 
+
+![alt text](\public\img\arrow_AoE_0.png)
+
+![alt text](\public\img\arrow_AoE_1.png)
 
 
 
@@ -106,6 +121,13 @@ category: Project_Dungeon&Fighter
 
 
 
+![alt text](\public\img\skill_basic_0.png)
+
+![alt text](\public\img\skill_basic_1.png)
+
+![alt text](\public\img\skill_basic_2.png)
+
+
 
 **기본 공격 (3단)**
 
@@ -124,6 +146,13 @@ category: Project_Dungeon&Fighter
 <br>
 
 
+![alt text](\public\img\skill_geardrive_0.png)
+
+![alt text](\public\img\skill_geardrive_1.png)
+
+![alt text](\public\img\skill_geardrive_2.png)
+
+![alt text](\public\img\skill_geardrive_3.png)
 
 
 
@@ -141,6 +170,11 @@ category: Project_Dungeon&Fighter
 <br>
 
 
+![alt text](\public\img\skill_mistheavyrain_0.png)
+
+![alt text](\public\img\skill_mistheavyrain_1.png)
+
+![alt text](\public\img\skill_mistheavyrain_2.png)
 
 
 
@@ -157,7 +191,17 @@ category: Project_Dungeon&Fighter
 <br>
 
 
+![alt text](\public\img\skill_sagittarius_0.png)
 
+![alt text](\public\img\skill_sagittarius_1.png)
+
+![alt text](\public\img\skill_sagittarius_2.png)
+
+![alt text](\public\img\skill_sagittarius_3.png)
+
+![alt text](\public\img\skill_sagittarius_4.png)
+
+![alt text](\public\img\skill_sagittarius_5.png)
 
 
 **신무성장 : 사지타리우스**
@@ -179,6 +223,11 @@ category: Project_Dungeon&Fighter
 >### 3. 플레이어 및 보스의 HUD, 피격과 사망
 
 
+![alt text](\public\img\hud_boss.png)
+
+![alt text](\public\img\hud_player.png)
+
+
 - 실시간으로 플레이어의 HP 와 MP 게이지, 보스 몬스터의 HP 게이지를 보여주는 HUD 를 추가했다.
 
 - 플레이어의 경우 HP와 MP 재생 수치에 따라 HP 와 MP가 다시 차오른다.
@@ -188,6 +237,8 @@ category: Project_Dungeon&Fighter
 <br>
 
 
+
+![alt text](\public\img\player_death_0.png)
 
 
 
@@ -203,6 +254,7 @@ category: Project_Dungeon&Fighter
 <br>
 
 
+![alt text](\public\img\largo_death_0.png)
 
 
 
@@ -218,6 +270,13 @@ category: Project_Dungeon&Fighter
 
 
 >### 4. 플레이어 아바타 시스템
+
+
+![alt text](\public\img\avatar_0.png)
+
+![alt text](\public\img\avatar_1.png)
+
+
 
 
 - 아바타의 코드를 통해 헤어, 모자, 상의, 하의, 신발, 무기 총 6개 파츠의 아바타를 개별적으로 변경할 수 있는 구조를 추가
