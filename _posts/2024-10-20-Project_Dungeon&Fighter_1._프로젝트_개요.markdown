@@ -120,7 +120,7 @@ category: Project_Dungeon&Fighter
 
 > 스킬 HUD
 
-> NPC 상호작용 (상점, 맵이동)
+> NPC 상호작용 (던전 선택, 맵이동)
 
 > 로딩 및 프레임 보완
 
