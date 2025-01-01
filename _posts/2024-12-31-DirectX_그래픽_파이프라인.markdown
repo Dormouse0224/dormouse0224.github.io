@@ -1,0 +1,370 @@
+---
+layout: post
+title: DirectX 1. 그래픽 파이프라인
+date: 2024-12-31 12:00:00 +0900
+category: DirectX
+---
+
+## 1. 그래픽 파이프라인
+
+1. [그래픽 파이프라인이란?]
+2. [그래픽 파이프라인의 세부 구조]
+
+---
+
+<br><br>
+
+>### 1. 그래픽 파이프라인이란?
+
+
+![alt text](\public\img\d3d11-pipeline-stages.jpg)
+
+DirectX 그래픽 파이프라인은 3D 그래픽 데이터를 화면에 렌더링하는 일련의 과정 및 단계를 뜻한다.
+그래픽 파이프라인은 GPU에서 처리되며, 공용 셰이더 코어(둥근 사각형 블록)를 사용하는 단계는 HLSL 언어를 통해 프로그래밍이 가능하다.
+
+
+---
+
+<br><br>
+
+>### 2. 그래픽 파이프라인의 세부 구조
+
+#### \#1. Input Assembler 단계
+
+**Input Assembler의 역할**
+
+1. 정점 데이터(Vertex Data)와 인덱스 데이터(Index Data) 결합
+    - 정점 데이터를 GPU의 Vertex Buffer에서 가져온다.
+    - 필요한 경우, Index Buffer에서 인덱스 데이터를 참조하여 정점을 재사용하거나 효율적으로 배열한다.
+
+2. 프리미티브(Primitive) 생성
+    - 정점 데이터를 결합하여 점(Point), 선(Line), 삼각형(Triangle) 같은 프리미티브를 생성한다.
+    - 사용자는 렌더링할 기본 프리미티브 유형(예: 삼각형 리스트, 선 스트립)을 지정해야 한다.
+
+3. 셰이더에 데이터 전달
+    - 생성된 정점 데이터를 Vertex Shader로 전달한다.
+
+<br>
+
+**Input Assembler의 입력**
+
+1. Vertex Bufffer
+    - 정점 데이터가 저장된 GPU 메모리.
+    - 각 정점의 위치, 색상, 텍스처 좌표, 법선 벡터 등의 속성이 포함된 버퍼이다.
+
+2. Index Buffer
+    - 정점 데이터를 인덱싱하여 정점 정보를 참조할 수 있도록 함.
+    - 예를 들어, 인덱싱 없이 삼각형 두개로 구성된 사각형을 표현하는 경우 정점이 6개가 필요하지만, 위치가 중복되는 정점은 인덱싱을 통해 참조함으로써 정점 수를 4개로 줄일 수 있음.
+
+3. Input Layout
+    - 정점 데이터의 구조를 정의함.
+    - 정점 데이터를 구성하는 각 속성(위치, 색상, 텍스처 좌표 등)의 세부 정보를 DESC로 전달한다.
+    - 크기, 버퍼 인덱스, 버퍼 데이터 빈도, 시멘틱, 바이트 오프셋 등을 전달할 수 있다.
+
+```cpp
+
+D3D11_INPUT_ELEMENT_DESC LayoutDesc[3] = {};
+
+LayoutDesc[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;			// 크기		
+LayoutDesc[0].InputSlot = 0;								// 버퍼의 인덱스
+LayoutDesc[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;	// 데이터 처리 방식(정점/인스턴스)
+LayoutDesc[0].InstanceDataStepRate = 0;						// 인스턴스 데이터 갱신 빈도
+LayoutDesc[0].SemanticName = "POSITION";					// 시멘틱 이름
+LayoutDesc[0].SemanticIndex = 0;							// 시멘틱 인덱스
+LayoutDesc[0].AlignedByteOffset = 0;						// 시작 위치
+
+LayoutDesc[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+LayoutDesc[1].InputSlot = 0;
+LayoutDesc[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+LayoutDesc[1].InstanceDataStepRate = 0;
+LayoutDesc[1].SemanticName = "COLOR";
+LayoutDesc[1].SemanticIndex = 0;
+LayoutDesc[1].AlignedByteOffset = 12;
+
+LayoutDesc[2].Format = DXGI_FORMAT_R32G32_FLOAT;
+LayoutDesc[2].InputSlot = 0;
+LayoutDesc[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+LayoutDesc[2].InstanceDataStepRate = 0;
+LayoutDesc[2].SemanticName = "TEXCOORD";
+LayoutDesc[2].SemanticIndex = 0;
+LayoutDesc[2].AlignedByteOffset = 28;
+
+```
+
+4. Primitive Topology
+    - 정점 데이터를 조합하여 생성할 프리미티브 유형을 지정한다.
+    - 유형에 따라 정점을 구성하는 방식(점, 선 또는 삼각형)이 달라지게 된다.
+
+|유형|설명|
+|---|---|
+|Point List	|각 정점을 독립적인 점으로 렌더링.|
+|Line List	|각 두 정점이 하나의 선을 형성.|
+|Line Strip	|선이 연속적으로 연결되어 스트립을 형성.|
+|Triangle List	|각 세 정점이 독립적인 삼각형을 형성.|
+|Triangle Strip	|정점이 연속적으로 연결되어 삼각형 스트립을 형성.|
+
+<br>
+
+**Input Assembler의 동작 과정**
+
+1. 정점 데이터 가져오기
+    - IASetVertexBuffers()를 통해 GPU 메모리에 바인딩된 Vertex Buffer에서 정점 정보를 가져온다.
+
+2. 정점 구조 및 속성 해석
+    - Input Layout을 바탕으로 각 정점 정보를 파싱한다.
+
+3. 인덱스 데이터 가져오기
+    - IASetIndexBuffer()를 통해 GPU 메모리에 바인딩된 Index Buffer를 기반으로 정점 데이터를 구성한다.
+
+4. 프리미티브 생성
+    - 구성된 정점 데이터로 지정된 프리미티브(점, 선, 삼각형)를 생성한다.
+
+5. Vertex Shader로 전달
+    - 최종적으로 생성된 정점 데이터와 프리미티브를 Vertex Shader 단계로 넘긴다.
+
+
+<br><br>
+
+#### \#2. Vertex Shader 단계
+
+**Vertex Shader의 역할**
+
+1. 정점 변환
+    - 행렬 연산을 통해 정점 데이터를 Model Space, World Space, View Space, Projection Space 간의 변환을 담당한다.
+    - 모델 변환: Model Space 에서 World Matrix 를 곱해 World Space 로 변환하는 것을 의미한다. 3D 모델의 크기, 회전, 위치 변환이 포함된다.
+    - 뷰 변환: World Space 에서 View Matrix 를 곱해 View Space 로 변환하는 것을 의미한다. 카메라 위치와 방향에 따라 3D 모델을 카메라 기준으로 배치한다.
+    - 프로젝션 변환: View Space 에서 Projection Matrix 를 곱해 Projection Space 로 변환하는 것을 의미한다. 원근 투영(perspective) 또는 정규 투영(orthographic)을 적용하여 
+    3D 모델을 2D 화면에 맞게 변환한다.
+
+2. 조명 계산
+    - 법선 벡터(Normal vector)를 이용하여 조명 방향과 각도를 계산해 색상 값을 변환할 수 있다.
+
+3. 텍스처 좌표 변환
+    - 2D 텍스처 맵을 3D 모델에 매핑하는 데 사용되는 텍스처 좌표 변환이 가능하다.
+
+4. 색상 계산
+    - 정점의 색상 값을 처리할 수 있다. 해당 색상은 Pixel Shader 단계에서 최종적으로 처리된다.
+
+<br>
+
+**Vertex Shader의 입력과 출력**
+
+Vertex Shader의 입력과 출력은 이전 IA 단계에서 전달받은 Vertex Buffer의 각 정점 구조에 따라 달라진다.
+
+HLSL로 Vertex Shader를 작성할 때 입력과 출력 구조체를 작성해 처리할 수 있다.
+
+
+
+<br><br>
+
+#### \#3. Hull Shader 단계
+
+Hull Shader는 Direct3D 11에서 제공하는 테셀레이션 파이프라인의 일부로, 주어진 패치를 기반으로 테셀레이션 레벨을 결정하고 패치 데이터를 변환하거나 보강하는 역할을 한다.
+
+이 셰이더는 테셀레이션 단계의 첫 번째 프로그래머블 셰이더로, Tessellator와 함께 동작하며, 최종적으로 Domain Shader에 데이터를 전달한다.
+
+<br>
+
+**Hull Shader의 역할**
+
+1. 테셀레이션 레벨 결정
+    - Hull Shader는 패치의 세밀도를 결정하는 테셀레이션 레벨을 계산한다. 이 값은 **외부 테셀레이션 레벨(Outer Tessellation Level)**과 **내부 테셀레이션 레벨(Inner Tessellation Level)**로 나뉘며, 패치의 테셀레이션 형태와 세밀도를 정의한다.
+    - 외부 테셀레이션 레벨: 패치의 외곽 부분의 세밀도를 정의한다.
+    - 내부 테셀레이션 레벨: 패치 내부의 세밀도를 정의한다.
+
+2. 입력 패치 데이터 변환
+    - Hull Shader는 입력 패치 데이터를 변환하거나 보강하여 Domain Shader에 전달할 수 있다. 이 과정에서 패치의 위치, 법선, 텍스처 좌표 등을 수정하거나, 새로운 데이터를 생성할 수 있다.
+
+3. 컨트롤 포인트 계산
+    - 입력 데이터에 따라 패치의 출력 컨트롤 포인트를 생성한다. 이는 테셀레이션 후 최종적으로 사용할 패치의 정점 데이터를 정의한다.
+
+**Hull Shader의 입력과 출력**
+1. 입력
+    -Hull Shader는 Input Assembler에서 전달된 **정점 데이터(Vertex Data)**와 테셀레이션 레벨 계산에 필요한 추가 데이터를 입력받는다. 입력 패치는 보통 **N개의 정점(컨트롤 포인트)**로 구성되며, 이 데이터는 패치의 형태를 정의한다.
+
+2. 출력
+    - Hull Shader는 두 가지 출력을 생성한다:
+    - 테셀레이션 레벨(Tessellation Factors): 패치의 세밀도를 정의하며, 분할기(테셀레이터) 단계로 전달돤다.
+    - 출력 패치(Output Patch): 변환된 패치 데이터를 포함하며, Domain Shader로 전달된다.
+
+<br>
+
+**Hull Shader 단계**
+
+Hull Shader는 두 가지 프로그래머블 블록으로 구성돤다:
+
+1. Hull Shader 함수(Hull Shader Function)
+이 함수는 각 **컨트롤 포인트(Control Point)**를 입력으로 받아 변환된 컨트롤 포인트 데이터를 생성한다. 각 컨트롤 포인트는 독립적으로 처리된다.
+
+2. 패치 상수 함수(Patch Constant Function)
+이 함수는 패치 전체를 입력으로 받아 테셀레이션 레벨을 계산한다. 계산된 레벨은 Tessellator에 전달된다.
+
+<br><br>
+
+#### \#4. Tessellator 단계
+
+<br><br>
+
+#### \#5. Domain Shader 단계
+
+<br><br>
+
+#### \#6. Geometry Shader 단계
+
+<br><br>
+
+#### \#6+. Stream Output 단계
+
+<br><br>
+
+#### \#7. Rasterizer 단계
+
+
+**Rasterizer의 작업**
+
+1. 클리핑 (Clipping)
+    - 화면 영역(View Frustum) 외부에 있는 기하 요소(Primitive)를 제거하거나 필요한 부분만 남긴다.
+    - 예를 들어, 삼각형이 화면의 경계를 벗어난 경우, 화면 내부에 해당하는 부분만 남도록 잘라낸다.
+
+2. 뷰포트 변환 (Viewport Transformation)
+    - 정규화된 디바이스 좌표(NDC, Normalized Device Coordinates)로 표현된 데이터를 뷰포트 좌표(Viewport Coordinates)로 변환한다.
+    - NDC는 -1.0에서 1.0 사이의 값으로 표현되며, 이를 뷰포트 크기에 맞게 매핑한다.
+
+3. 래스터화 (Rasterization)
+    - 클리핑된 기하 요소(Primitive)를 화면 좌표계에서 픽셀로 분해한다.
+    - 각 Primitive(삼각형, 선, 점 등)는 화면의 픽셀 그리드에 맞게 분해되며, 각 픽셀에 대해 속성(위치, 색상, 텍스처 좌표 등)을 계산한다.
+    - 각 픽셀에 대한 보간 작업은 Barycentric Interpolation을 사용하여 픽셀의 속성에 대한 계산이 처리된다.
+
+4. 백면 제거 (Back-face Culling)
+    - 시야에서 보이지 않는 면(Back-face)을 제거하여 불필요한 렌더링 작업을 줄여 성능을 최적화한다.
+    - 삼각형의 정점 순서를 기준으로 렌더링 여부를 결정한다:
+        - CW(Clockwise): 시계 방향 정점 순서를 가진 면.
+        - CCW(Counter-Clockwise): 반시계 방향 정점 순서를 가진 면.
+    - Culling 작업을 하지 않는 경우 양면으로 렌더링된다.
+
+
+<br>
+
+이후 Rasterizer 에서 화면상에 렌더링될 모든 픽셀에 대해 Pixel Shader를 호출한다.
+
+<br><br>
+
+#### \#8. Pixel Shader 단계
+
+Pixel Shader 단계는 그래픽 파이프라인에서 Rasterizer 단계 이후에 실행되며, 화면에 렌더링될 **각 픽셀(Fragment)**의 최종 색상을 계산하는 역할을 한다. Fragment Shader라고도 불리며, 픽셀의 텍스처, 색상, 조명 효과, 투명도 등을 결정하는 데 사용된다.
+
+<br>
+
+**Pixel Shader의 역할**
+
+1. 각 픽셀(Fragment) 처리
+    - Rasterizer 단계에서 생성된 Fragment를 입력으로 받아, 각 Fragment에 대해 개별적으로 작업을 수행한다.
+
+2. 텍스처 샘플링
+    - 텍스처 데이터를 읽어와 픽셀에 적용한다. 이 과정에서 UV 좌표를 사용하여 텍스처 맵의 특정 위치를 참조한다.
+
+3. 조명 계산
+    - Phong 모델, Blinn-Phong 모델, 또는 물리 기반 렌더링(PBR) 같은 다양한 조명 모델을 적용하여 픽셀의 밝기와 색상을 결정한다.
+
+4. 색상 계산
+    - 텍스처 데이터, 조명 계산 결과, 정점 속성(색상 등)을 조합하여 최종 픽셀 색상을 계산한다.
+
+5. 투명도 및 블렌딩
+    - 픽셀의 알파 값(투명도)을 기반으로 다른 픽셀과 섞는 작업을 수행한다.
+
+6. 후처리 효과(Post-processing)
+    - 그림자, 반사, 굴절, 화면 전체 효과 등 특수 효과를 추가할 수 있다.
+
+<br>
+
+
+**Pixel Shader의 입력과 출력**
+
+1. 입력
+- Rasterizer 단계에서 전달된 각 Fragment의 정보:
+    - 픽셀 위치: 화면 좌표계에서 픽셀의 위치.
+    - UV 텍스처 좌표: 텍스처 맵에서의 좌표.
+    - 보간된 색상: 정점 셰이더에서 전달된 색상 데이터를 보간한 값.
+    - 법선 벡터: 표면의 방향을 나타냄.
+    - 깊이 값: Z-버퍼에 사용될 깊이 값.
+
+2. 출력
+- 픽셀의 최종 색상:
+    - RGBA 값 (Red, Green, Blue, Alpha)으로 표현된다.
+    - 출력된 색상은 **렌더 타겟(Render Target)**에 기록되며, 화면에 표시된다.
+
+<br>
+
+**Pixel Shader 단계의 동작 과정**
+
+1. 입력 데이터 처리
+    - Rasterizer에서 넘어온 픽셀 데이터를 받아 필요한 값을 준비한다. 예: UV 좌표, 보간된 정점 속성.
+
+2. 텍스처 샘플링
+    - 텍스처 데이터를 읽어옵니다. UV 좌표를 사용하여 텍스처 맵에서 특정 위치의 색상을 참조한다.
+    - 텍스처 필터링(예: 선형 보간, 이방성 필터링)을 통해 샘플링 품질을 조정한다.
+
+3. 조명 계산
+    - 법선 벡터와 조명 정보(광원 방향, 강도, 색상 등)를 이용해 픽셀에 조명을 적용한다.
+    - 조명 모델: Phong, Blinn-Phong, PBR 등.
+
+4. 색상 조합
+    - 텍스처 색상, 조명 결과, 정점 색상 등을 조합하여 최종 픽셀 색상을 결정한다.
+
+5. 알파 블렌딩
+    - 픽셀의 투명도를 처리하여 배경 픽셀과 블렌딩한다.
+
+6. 출력
+    - 계산된 최종 색상을 렌더 타겟으로 전달한다.
+
+
+<br>
+
+또한, discard; 명령어를 통해 해당 픽셀에 대한 그래픽 파이프라인 처리를 중단시킬 수 있다.
+
+이 경우, 해당 픽셀은 Output Merge 단계로 이어지지 않으므로 렌더링되지 않으며, depth 값도 남지 않는다.
+
+<br><br>
+
+#### \#9. Output Merge 단계
+
+
+**Output Merger 단계의 역할**
+
+1. 렌더 타겟 결합
+    - 픽셀 셰이더의 출력 데이터(RGBA 값)를 **렌더 타겟(Render Target)**에 저장한다.
+    - 멀티 렌더 타겟(MRT, Multiple Render Targets)을 지원하여 여러 타겟에 동시에 데이터를 출력할 수 있다.
+
+2. 깊이 테스트 (Depth Testing)
+    - 픽셀의 깊이 값을 기존 깊이 값(Z-버퍼)과 비교하여 렌더링 여부를 결정한다.
+    - 기본적으로 카메라에 더 가까운 픽셀만 렌더링한다.
+
+3. 스텐실 테스트 (Stencil Testing)
+    - 스텐실 값과 정의된 조건을 비교하여 픽셀을 렌더링할지 여부를 결정한다.
+    - 특정 영역에만 렌더링을 제한하거나 마스크 효과를 구현할 때 사용된다.
+
+4. 블렌딩 (Blending)
+    - 픽셀 셰이더의 출력 색상과 렌더 타겟에 이미 저장된 기존 색상을 **혼합(Blend)**한다.
+    - 반투명 렌더링, 글로우 효과 등 다양한 시각 효과를 구현할 수 있다.
+
+**Output Merger 단계의 동작 과정**
+1. 깊이 테스트(Depth Testing)
+    - 픽셀의 깊이 값(Depth)을 Z-버퍼와 비교.
+    - 테스트를 통과하지 못한 픽셀은 폐기(Discard).
+
+2. 스텐실 테스트(Stencil Testing)
+    - 스텐실 버퍼에 저장된 값과 정의된 조건을 비교.
+    - 테스트 결과에 따라 픽셀의 렌더링 여부를 결정.
+    - 특정 영역에만 렌더링을 제한하거나 마스크 효과를 구현할 때 사용된다.
+
+3. 블렌딩(Blending)
+    - 픽셀 셰이더 출력 색상과 렌더 타겟의 기존 색상을 조합하여 최종 색상을 계산.
+    - 조합 방법은 블렌딩 상태 설정에 따라 결정.
+    - 반투명 렌더링, 글로우 효과 등 다양한 시각 효과를 구현할 수 있다.
+
+4. 렌더 타겟 갱신
+    - 계산된 최종 색상을 렌더 타겟에 저장.
+    - 멀티 렌더 타겟(MRT, Multiple Render Targets)을 지원하여 여러 타겟에 동시에 데이터를 출력할 수 있다.
+
+
+---
