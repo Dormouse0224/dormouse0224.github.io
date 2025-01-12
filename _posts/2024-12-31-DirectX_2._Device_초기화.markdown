@@ -1,0 +1,68 @@
+---
+layout: post
+title: DirectX 2. Device 초기화
+date: 2025-01-12 12:00:00 +0900
+category: DirectX
+---
+
+## 2. Device 초기화
+
+1. [DirectX11 Device 초기화]
+
+---
+
+<br><br>
+
+>### 1. DirectX11 Device 초기화
+
+1. Device / Device Context
+
+
+D3D11CreateDevice() 함수를 통해 생성한다.
+
+디버그 내용이 필요한 경우, Flag 인자에 D3D11_CREATE_DEVICE_DEBUG 를 넣어주면 된다.
+
+Device 는 주로 Buffer, Vertex/Pixel Shader, Texture2D 등의 리소스를 **생성**하고 관리하는 역할을 한다.
+
+Device Context 는 주로 그래픽 파이프라인의 제어 역할을 한다.
+
+Device 에서 생성한 리소스를 이용해 실제 작업(렌더링 등)을 주로 수행하며, Buffer, Shader의 바인딩 작업과 파이프라인 상태(Rasterizer/Blend/Depth/Stencil State)를 설정하고 제어한다.
+
+
+<br>
+
+2. Swap Chain
+
+GPU 에서 렌더링된 이미지를 디스플레이 화면에 전달해 출력하는 역할을 한다.
+
+DXGI_SWAP_CHAIN_DESC 를 통해 Swap Chain 의 세부 설정 후 생성할 수 있다.
+
+IDXGISwapChain::Present() 함수의 SyncInterval 파라미터로 V-Sync를 활성화 할 수 있으며, 이 함수를 통해 백 버퍼를 프론트 버퍼로 스왑한다.
+
+<br>
+
+3. Render Target View
+
+RTV는 GPU가 렌더링 결과를 출력하는 대상을 정의하는 View로, 주로 Swap Chain의 백버퍼를 정의하는 역할을 맡는다.
+
+Swap Chain 에서 백 버퍼를 가져온 후, 해당 백 버퍼를 기반으로 RTV를 생성하고 이를 파이프라인에 바인딩한다.
+
+<br>
+
+4. Viewport
+
+렌더링된 이미지가 화면에 출력되는 영역을 정의한다.
+
+멀티 뷰포트를 이용해 화면에 여러 화면을 출력할 수 있다.
+
+좌표 변환이 끝난 NDC 좌표를 뷰포트 설정에 기반하여 **뷰포트 변환(Viewport Transformation)**을 통해 실제 화면 공간으로 매핑하여 출력한다.
+
+$$
+
+x_screen = (x_NDC + 1) / 2 * viewport_width + viewport_x
+y_screen = (1 - y_NDC) / 2 * viewport_height + viewport_y
+z_screen = z_NDC * (max_depth - min_depth) + min_depth
+
+$$
+
+---
