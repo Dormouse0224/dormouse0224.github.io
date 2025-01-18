@@ -59,11 +59,14 @@ Swap Chain 에서 백 버퍼를 가져온 후, 해당 백 버퍼를 기반으로
 
 <br>
 
-$ \large x_{screen} = \frac {(x_{NDC} + 1)} {2} \times viewport_{width} + viewport_x $
+$$
 
-$ \large y_{screen} = \frac {(1 - y_{NDC})} {2} \times viewport_{height} + viewport_y $
+\large x_{screen} = \frac {(x_{NDC} + 1)} {2} \times viewport_{width} + viewport_x
 
-$ \large z_{screen} = z_{NDC} \times (max_{depth} - min_{depth}) + min_{depth} $
+\large y_{screen} = \frac {(1 - y_{NDC})} {2} \times viewport_{height} + viewport_y
 
+\large z_{screen} = z_{NDC} \times (max_{depth} - min_{depth}) + min_{depth}
+
+$$
 
 ---
