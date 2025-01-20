@@ -1,0 +1,110 @@
+---
+layout: post
+title: DirectX 3. 정점
+date: 2025-01-20 12:00:00 +0900
+category: DirectX
+---
+
+## 3. 정점
+
+1. [정점(Vertex)](#1-정점vertex)
+2. [정점 데이터 정의](#2-정점-데이터-정의)
+3. [정점 버퍼(Vertex Buffer)](#3-정점-버퍼vertex-buffer)
+
+---
+
+<br><br>
+
+>### 1. 정점(Vertex)
+
+**정점(Vertex)**은 3D 객체를 구성하는 기본 단위로, 주로 3D 공간에서의 위치 정보와 추가 속성을 포함하는 데이터이다.
+
+정점 데이터는 Input Assembler 단계에 정점 버퍼를 통해 그래픽 파이프라인에 전달되어 처리된다.
+
+정점 데이터는 구조체로 정의하며, 사용자가 정점에 포함될 정보를 정의한다.
+
+정점은 주로 위치, 색상, 텍스처 좌표, 정점의 표면 및 텍스처 방향 등 여러 정보를 포함한다.
+
+---
+
+<br><br>
+
+>### 2. 정점 데이터 정의
+
+DirectX 11에서는 정점 데이터를 정의하기 위해 구조체를 사용한다.
+
+<br>
+
+```cpp
+
+struct Vtx
+{
+	Vec3	vPos;		// 정점의 위치
+	Vec4	vColor;		// 정점의 색상	
+	Vec2	vUV;		// 정점에 입혀질 텍스쳐의 위치(좌표)
+};
+
+```
+
+<br>
+
+Vec 자료형은 Microsoft의 [DirectX Tool Kit for DirectX 11][1] 에서 DirectX::XMFLOAT 을 Vector 로 재정의한 것을 한번 더 재정의한 것이다.
+
+또한, 정점 데이터는 각 정점 데이터의 속성을 셰이더에 전달하는 Input Layout 과 일치해야 한다.
+
+<br>
+
+```cpp
+
+D3D11_INPUT_ELEMENT_DESC LayoutDesc[3] = {};
+
+LayoutDesc[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;	// 크기		
+LayoutDesc[0].InputSlot = 0;						// 버퍼의 인덱스
+LayoutDesc[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+LayoutDesc[0].InstanceDataStepRate = 0;
+LayoutDesc[0].SemanticName = "POSITION";
+LayoutDesc[0].SemanticIndex = 0;
+LayoutDesc[0].AlignedByteOffset = 0;				// 시작 위치
+
+LayoutDesc[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;	// 크기		
+LayoutDesc[1].InputSlot = 0;							// 버퍼의 인덱스
+LayoutDesc[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+LayoutDesc[1].InstanceDataStepRate = 0;
+LayoutDesc[1].SemanticName = "COLOR";
+LayoutDesc[1].SemanticIndex = 0;
+LayoutDesc[1].AlignedByteOffset = 12;					// 시작 위치
+
+LayoutDesc[2].Format = DXGI_FORMAT_R32G32_FLOAT;	// 크기		
+LayoutDesc[2].InputSlot = 0;						// 버퍼의 인덱스
+LayoutDesc[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+LayoutDesc[2].InstanceDataStepRate = 0;
+LayoutDesc[2].SemanticName = "TEXCOORD";
+LayoutDesc[2].SemanticIndex = 0;
+LayoutDesc[2].AlignedByteOffset = 28;			// 시작 위치
+
+```
+
+<br>
+
+Input Layout은 정점 버퍼와 함께 Input Assembler 단계에 그래픽 파이프라인에 전달되며, 셰이더에서는 Input Layout 의 정보를 바탕으로 정점 버퍼에서 정점 데이터를 읽어들이게 된다.
+
+---
+
+<br><br>
+
+>### 3. 정점 버퍼(Vertex Buffer)
+
+정점 버퍼는 정점 데이터를 그래픽 파이프라인에 전달하기 위한 버퍼이다.
+
+ID3D11Buffer 자료형을 사용하며, D3D11_BUFFER_DESC 로 디스크립션을 작성 해 CreateBuffer() 로 생성한다.
+
+필요한 경우, D3D11_SUBRESOURCE_DATA 의 pSysMem 멤버 변수를 통해 첫 생성 시 초기화 데이터를 지정할 수 있다.
+
+Input Assembler 에 정점 버퍼를 전달할 때 IASetVertexBuffers() 함수의 인자 중 Offset은 버퍼를 읽기 시작할 위치를 나타내는데, 이를 이용해 분할 렌더링 등을 구현할 수 있다.
+
+디스크립션에 대한 자세한 정보는 [MSDN][2]을 참고.
+
+---
+
+[1](http://go.microsoft.com/fwlink/?LinkId=248929)
+[2](https://learn.microsoft.com/ko-kr/windows/win32/api/d3d11/ns-d3d11-d3d11_buffer_desc)

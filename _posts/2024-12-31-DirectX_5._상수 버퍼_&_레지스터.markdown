@@ -1,0 +1,149 @@
+---
+layout: post
+title: DirectX 5. 상수 버퍼 & 레지스터
+date: 2025-01-20 12:00:00 +0900
+category: DirectX
+---
+
+## 5. 상수 버퍼 & 레지스터
+
+1. [상수 버퍼](#1-상수-버퍼)
+2. [레지스터(Register)](#2-레지스터register)
+
+---
+
+<br><br>
+
+>### 1. 상수 버퍼
+
+**상수 버퍼(Constant Buffer)**는 DirectX 11에서 GPU 셰이더에 동일한 데이터를 효율적으로 전달하기 위해 사용되는 데이터 구조이다.
+
+상수 버퍼는 여러 개의 셰이더 상수를 묶어 GPU와 CPU 간의 메모리 복사를 최적화하는 역할을 한다.
+
+<br>
+
+상수 버퍼의 사용 순서
+
+1. 상수 버퍼 구조체 정의 : HLSL 에서 cbuffer로 정의하고, C++ 에서 HLSL과 동일한 구조체를 정의한다.
+
+2. 상수 버퍼 생성 : Direct3D 장치를 사용하여 상수 버퍼를 생성한다.
+
+```cpp
+
+// 물체의 위치값을 전달시키기 위한 상수버퍼 생성
+m_Desc.ByteWidth = _BufferSize;
+
+m_Desc.Usage = D3D11_USAGE_DYNAMIC;				// 동적 업데이트 가능
+m_Desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;	// CPU에서 쓰기 가능
+m_Desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;	// 상수 버퍼로 사용
+
+if (FAILED(DEVICE->CreateBuffer(&m_Desc, nullptr, m_Buffer.GetAddressOf())))
+{
+	return E_FAIL;
+}
+
+```
+
+3. 상수 버퍼 업데이트 : 셰이더에 데이터를 전달하기 위해 상수 버퍼를 업데이트한다.
+
+```cpp
+
+void CConstBuffer::SetData(void* _Data, UINT _DataSize)
+{
+	D3D11_MAPPED_SUBRESOURCE tMapSub = {};
+
+	CONTEXT->Map(m_Buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &tMapSub);
+
+	memcpy(tMapSub.pData, _Data, _DataSize);
+
+	CONTEXT->Unmap(m_Buffer.Get(), 0);
+}
+
+```
+
+4. 셰이더에 상수 버퍼 바인딩 : 상수 버퍼를 셰이더에 연결한다.
+
+```cpp
+
+void CConstBuffer::Binding()
+{
+	CONTEXT->VSSetConstantBuffers((UINT)m_Type, 1, m_Buffer.GetAddressOf());
+	CONTEXT->HSSetConstantBuffers((UINT)m_Type, 1, m_Buffer.GetAddressOf());
+	CONTEXT->DSSetConstantBuffers((UINT)m_Type, 1, m_Buffer.GetAddressOf());
+	CONTEXT->GSSetConstantBuffers((UINT)m_Type, 1, m_Buffer.GetAddressOf());
+	CONTEXT->PSSetConstantBuffers((UINT)m_Type, 1, m_Buffer.GetAddressOf());
+}
+
+```
+
+
+<br>
+
+**주의사항**
+
+1. 16바이트 정렬 규칙
+
+데이터는 16바이트 단위로 정렬해야 한다.
+    - 예: float3은 크기가 12바이트이므로, 4바이트 패딩이 추가되어 16바이트로 맞춰진다.
+
+2. 동적 버퍼 갱신
+
+GPU에서 사용 중인 데이터를 변경하려면 동적 버퍼(D3D11_USAGE_DYNAMIC)와 쓰기 매핑(D3D11_MAP_WRITE_DISCARD)을 사용해야 한다.
+
+3. 레지스터 관리
+
+상수 버퍼는 특정 레지스터(register(bN))에 연결되므로 충돌을 방지해야 한다.
+
+---
+
+<br><br>
+
+>### 2. 레지스터(Register)
+
+DirectX와 HLSL에서 **레지스터(Register)**는 GPU 메모리와 셰이더 간의 데이터 매핑을 정의하는 역할을 한다. 셰이더 프로그램에서 사용하는 리소스(상수 버퍼, 텍스처, 샘플러 등)가 GPU의 특정 메모리 슬롯과 연결될 때 사용된다.
+
+<br>
+
+|리소스 타입|레지스터 접두사|설명|
+|---|---|---|
+|상수 버퍼|b|상수 데이터가 저장된 버퍼|
+|텍스처|t|2D/3D 텍스처, 텍스처 배열 등|
+|샘플러|s|텍스처를 샘플링하는 데 사용하는 리소스|
+|순서가 지정되지 않은 액세스 리소스|u|UAV(Unordered Access View) 리소스|
+
+<br>
+
+HLSL 에서 레지스터 지정은 register() 을 사용한다.
+
+<br>
+
+```hlsl
+
+// 상수 버퍼
+cbuffer TRANSFORM : register(b0)
+{
+    row_major matrix g_matWorld;
+    row_major matrix g_matView;
+    row_major matrix g_matProj;
+    
+    row_major matrix g_matWV;
+    row_major matrix g_matWVP;
+}
+
+// 샘플러
+SamplerState g_sam_0 : register(s0);
+SamplerState g_sam_1 : register(s1);
+
+
+// 텍스처
+Texture2D g_tex_0 : register(t0);
+Texture2D g_tex_1 : register(t1);
+
+```
+
+<br>
+
+UAV(Unordered Access View) 리소스가 사용하는 u 레지스터는 주로 컴퓨트 셰이더에서 사용된다.
+
+
+---

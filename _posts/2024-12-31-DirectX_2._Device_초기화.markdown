@@ -7,7 +7,7 @@ category: DirectX
 
 ## 2. Device 초기화
 
-1. [DirectX11 Device 초기화]
+1. [DirectX11 Device 초기화](#1-directx11-device-초기화)
 
 ---
 
