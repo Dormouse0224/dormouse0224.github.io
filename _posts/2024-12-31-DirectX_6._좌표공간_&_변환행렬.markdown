@@ -119,11 +119,11 @@ $\large \View \Matrix = \begin{bmatrix} R_x & R_y & R_z & -\Eye _x \\ U_x & U_y 
 	
 $$
 \begin{aligned}
-\Orthographic \Matrix = \begin{bmatrix} 
-\frac{2}{\Width} & 0 & 0 & 0 \\
-0 & \frac{2}{\Height} & 0 & 0 \\
-0 & 0 & \frac{1}{\FarZ - \NearZ} & 0 \\
-0 & 0 & -\frac{\NearZ}{\FarZ - \NearZ} & 1 
+Orthographic Matrix = \begin{bmatrix} 
+\frac{2}{Width} & 0 & 0 & 0 \\
+0 & \frac{2}{Height} & 0 & 0 \\
+0 & 0 & \frac{1}{FarZ - NearZ} & 0 \\
+0 & 0 & -\frac{NearZ}{FarZ - NearZ} & 1 
 \end{bmatrix}
 \end{aligned}
 $$
