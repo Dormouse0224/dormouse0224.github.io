@@ -1,0 +1,127 @@
+---
+layout: post
+title: DirectX 6. 좌표공간 & 변환행렬
+date: 2025-01-20 12:00:00 +0900
+category: DirectX
+---
+
+## 6. 좌표공간 & 변환행렬
+
+1. [좌표공간](#1-좌표공간)
+2. [변환행렬](#2-변환행렬)
+
+---
+
+<br><br>
+
+>### 1. 좌표공간
+
+**\#1. 모델 좌표 (Model Space)**
+
+모델이 존재하는 좌표 공간으로, 최초 정점 배치 시 정점이 위치하는 공간이다.
+
+3D 모델링 파일이 있다면, 파일에서 각 정점이 원점을 중심으로 위치하는 좌표가 모델 좌표이다.
+
+<br>
+
+**\#2. 월드 좌표 (World Space)**
+
+모델 좌표가 월드 공간으로 변환되어 위치하게 되는 좌표 공간이다.
+
+월드 행렬(World Matrix)을 이용해 모델 좌표로부터 월드 좌표로 변환할 수 있으며, 월드 행렬은 각각 크기(Scaling), 회전(Rotation), 이동(Translation)로 이루어져 있다.
+
+게임 내 공간에서 오브젝트가 실제로 위치하는 좌표라고 생각하면 된다.
+
+<br>
+
+**\#3. 뷰 좌표 (View Space)**
+
+카메라가 기준이 되는 좌표 공간. 모든 객체가 카메라 기준으로 변환된다.
+
+뷰 행렬(View Matrix)을 통해 월드 좌표로부터 뷰 좌표로 변환할 수 있으며, 뷰 행렬은 카메라의 위치를 반영한다.
+
+카메라를 기준으로 게임 월드 내 오브젝트를 바라 볼 때 좌표라고 생각하면 된다.
+
+<br>
+
+**\#4. 클립 좌표 (Clip Space)**
+
+뷰 공간의 좌표를 화면에 표시되는 공간으로 투영(Projection)하여 만들어지는 좌표.
+
+월드 내 모든 오브젝트가 카메라에 잡히지는 않는다. 카메라 바깥의 오브젝트는 아예 안 보일 것이고, 어떤 오브젝트는 일부가 카메라 바깥으로 나가 부분만 보일 것이다.
+
+이러한 카메라의 시야에 잡히지 않는 좌표를 클리핑하여 렌더링에서 제외시키고 시야 범위 내에 들어오는 좌표들을 공간 안에 배치시킨 좌표가 클립 좌표이다.
+
+<br>
+
+투영 행렬(Projection Matrix)을 통해 뷰 좌표로부터 클립 좌표로 변환이 가능하며, 투영 방식에 따라 각각 원근 투영(Perspective Projection)과 직교 투영(Orthographic Projection)으로 나뉜다. 투영 방식에 따라 행렬이 달라지기 때문에 주의해야 한다.
+
+<br>
+
+**\#5. NDC (Normalized Device Coordinate)**
+
+클립 좌표에서 동차 좌표 w로 x, y, z 좌표를 나누어 x, y는 \[-1, 1\], z는 \[0, 1\] 범위로 정규화시킨 좌표 공간이다.
+
+정규화는 사용자가 행렬 변환을 끝낸 좌표를 파이프라인에 전달하면 내부적으로 알아서 수행된다.
+
+<br>
+
+**\#6. 스크린 좌표 (Screen Space)**
+
+NDC 좌표를 뷰포트(Viewport) 변환을 통해 스크린 픽셀 좌표로 변환한 공간이다.
+
+디바이스 또는 출력 화면의 해상도에 따라 파이프라인 내에서 NDC로 정규화된 좌표를 화면 해상도에 맞게 뷰포트 변환(Viewport Transformation)을 수행한다.
+
+---
+
+<br><br>
+
+>### 2. 변환행렬
+
+\#1. 월드 행렬 (World Matrix)
+
+$\large (월드 행렬) = (크기 행렬) \tiems (회전 행렬) \times (이동 행렬)$
+
+
+	- 크기 행렬 (Scaling Matrix)
+
+$\large \begin{bmatrix} a & 0 & 0 & 0 \\ 0 & b & 0 & 0 \\ 0 & 0 & c & 0 \\ 0 & 0 & 0 & 1  \end{bmatrix}$
+ 
+
+	- 회전 행렬 (Rotation Matrix)
+
+X 축:
+$\large \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & \cos \theta & \sin \theta & 0 \\ 0 & -\sin \theta & \cos \theta & 0 \\ 0 & 0 & 0 & 1  \end{bmatrix}$
+
+Y 축:
+$\large \begin{bmatrix} \cos \theta & 0 & -\sin \theta  & 0 \\  0 & 1 & 0 & 0 \\ \sin \theta & 0 & \cos \theta & 0 \\ 0 & 0 & 0 & 1  \end{bmatrix}$
+
+Z 축:
+$\large \begin{bmatrix} \cos \theta & \sin \theta & 0 & 0 \\ -\sin \theta & \cos \theta & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1  \end{bmatrix}$
+
+
+	- 이동 행렬 (Translation Matrix)
+
+$\large \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ a & b & c & 1  \end{bmatrix}$
+
+
+
+\#2. 뷰 행렬 (View Matrix)
+
+$\large \View \Matrix = \begin{bmatrix} R_x & R_y & R_z & -\Eye _x \\ U_x & U_y & U_z & -\Eye _y \\ F_x & F_y & F_z & -\Eye _z \\ 0 & 0 & 0 & 1 \end{bmatrix}$
+
+
+\#3. 투영 행렬 (Projection Matrix)
+
+![alt text](\public\img\projection.png)
+
+	- 직교 투영 행렬 (Orthographic Projection Matrix)
+	
+$\large \Orthographic \Matrix = \begin{bmatrix} \frac {2} {\Width} & 0 & 0 & 0 \\ 0 & \frac {2} {\Height} & 0 & 0 \\ 0 & 0 & \frac {1} {\FarZ - \NearZ} & 0 \\ 0 & 0 & -\frac {\NearZ} {\FarZ - \NearZ} & 1 \end{bmatrix}$
+
+
+	- 원근 투영 행렬 (Perspective Projection Matrix)
+
+$\large \Perspective \Matrix = \begin{bmatrix} \frac {1} {\Aspect \cdot \tan (\frac {\Fov} {2})} & 0 & 0 & 0 \\ 0 & \frac {1} {\tan (\frac {\Fov} {2})} & 0 & 0 \\ 0 & 0 & \frac {\FarZ} {\FarZ - \NearZ} & 1 \\ 0 & 0 & -\frac {\NearZ \cdot \FarZ} {\FarZ - \NearZ} & 0 \end{bmatrix}$
+
+---
