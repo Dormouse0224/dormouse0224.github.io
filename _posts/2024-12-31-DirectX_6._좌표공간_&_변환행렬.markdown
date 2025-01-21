@@ -80,35 +80,84 @@ NDC 좌표를 뷰포트(Viewport) 변환을 통해 스크린 픽셀 좌표로 �
 
 \#1. 월드 행렬 (World Matrix)
 
-$\large (월드 행렬) = (크기 행렬) \tiems (회전 행렬) \times (이동 행렬)$
+$$
+(월드 행렬) = (크기 행렬) \times (회전 행렬) \times (이동 행렬)
+$$
 
 
 	- 크기 행렬 (Scaling Matrix)
 
-$\large \begin{bmatrix} a & 0 & 0 & 0 \\ 0 & b & 0 & 0 \\ 0 & 0 & c & 0 \\ 0 & 0 & 0 & 1  \end{bmatrix}$
+$$
+\begin{bmatrix}
+a & 0 & 0 & 0 \\
+0 & b & 0 & 0 \\
+0 & 0 & c & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
  
 
 	- 회전 행렬 (Rotation Matrix)
 
 X 축:
-$\large \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & \cos \theta & \sin \theta & 0 \\ 0 & -\sin \theta & \cos \theta & 0 \\ 0 & 0 & 0 & 1  \end{bmatrix}$
+
+$$
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & \cos \theta & \sin \theta & 0 \\
+0 & -\sin \theta & \cos \theta & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
 
 Y 축:
-$\large \begin{bmatrix} \cos \theta & 0 & -\sin \theta  & 0 \\  0 & 1 & 0 & 0 \\ \sin \theta & 0 & \cos \theta & 0 \\ 0 & 0 & 0 & 1  \end{bmatrix}$
+
+$$
+\begin{bmatrix}
+\cos \theta & 0 & -\sin \theta  & 0 \\
+0 & 1 & 0 & 0 \\
+sin \theta & 0 & \cos \theta & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
 
 Z 축:
-$\large \begin{bmatrix} \cos \theta & \sin \theta & 0 & 0 \\ -\sin \theta & \cos \theta & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1  \end{bmatrix}$
+
+$$
+\begin{bmatrix}
+\cos \theta & \sin \theta & 0 & 0 \\
+-\sin \theta & \cos \theta & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
 
 
 	- 이동 행렬 (Translation Matrix)
 
-$\large \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ a & b & c & 1  \end{bmatrix}$
+$$
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+a & b & c & 1
+\end{bmatrix}
+$$
 
 
 
 \#2. 뷰 행렬 (View Matrix)
 
-$\large \View \Matrix = \begin{bmatrix} R_x & R_y & R_z & -\Eye _x \\ U_x & U_y & U_z & -\Eye _y \\ F_x & F_y & F_z & -\Eye _z \\ 0 & 0 & 0 & 1 \end{bmatrix}$
+$$
+\begin{aligned}
+View Matrix = \begin{bmatrix}
+R_x & R_y & R_z & -Eye _x \\
+U_x & U_y & U_z & -Eye _y \\
+F_x & F_y & F_z & -Eye _z \\
+0 & 0 & 0 & 1 
+end{bmatrix}
+\end{aligned}
+$$
 
 
 \#3. 투영 행렬 (Projection Matrix)
@@ -118,19 +167,20 @@ $\large \View \Matrix = \begin{bmatrix} R_x & R_y & R_z & -\Eye _x \\ U_x & U_y 
 	- 직교 투영 행렬 (Orthographic Projection Matrix)
 	
 $$
+\begin{aligned}
 Orthographic Matrix = \begin{bmatrix} 
 \frac{2}{Width} & 0 & 0 & 0 \\
 0 & \frac{2}{Height} & 0 & 0 \\
 0 & 0 & \frac{1}{FarZ - NearZ} & 0 \\
 0 & 0 & -\frac{NearZ}{FarZ - NearZ} & 1 
 \end{bmatrix}
+\end{aligned}
 $$
 
 
 	- 원근 투영 행렬 (Perspective Projection Matrix)
 
 $$
-\large 
 \begin{aligned} 
 Perspective Matrix = \begin{bmatrix} 
 \frac {1} {Aspect \cdot \tan (\frac {Fov} {2})} & 0 & 0 & 0 \\ 
