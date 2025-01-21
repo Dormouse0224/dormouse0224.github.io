@@ -117,7 +117,7 @@ $\large \View \Matrix = \begin{bmatrix} R_x & R_y & R_z & -\Eye _x \\ U_x & U_y 
 
 	- 직교 투영 행렬 (Orthographic Projection Matrix)
 	
-$$
+\[
 \begin{aligned}
 Orthographic Matrix = \begin{bmatrix} 
 \frac{2}{Width} & 0 & 0 & 0 \\
@@ -126,7 +126,7 @@ Orthographic Matrix = \begin{bmatrix}
 0 & 0 & -\frac{NearZ}{FarZ - NearZ} & 1 
 \end{bmatrix}
 \end{aligned}
-$$
+\]
 
 
 	- 원근 투영 행렬 (Perspective Projection Matrix)
