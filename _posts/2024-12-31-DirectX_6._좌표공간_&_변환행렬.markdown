@@ -1,7 +1,7 @@
 ---
 layout: post
 title: DirectX 6. 좌표공간 & 변환행렬
-date: 2025-01-20 12:00:00 +0900
+date: 2025-01-24 09:00:00 +0900
 category: DirectX
 ---
 
@@ -80,9 +80,7 @@ NDC 좌표를 뷰포트(Viewport) 변환을 통해 스크린 픽셀 좌표로 �
 
 \#1. 월드 행렬 (World Matrix)
 
-$$
-(월드 행렬) = (크기 행렬) \times (회전 행렬) \times (이동 행렬)
-$$
+$ (\text{월드 행렬}) = (\text{크기 행렬}) \times (\text{회전 행렬}) \times (\text{이동 행렬}) $
 
 
 	- 크기 행렬 (Scaling Matrix)
@@ -149,14 +147,12 @@ $$
 \#2. 뷰 행렬 (View Matrix)
 
 $$
-\begin{aligned}
-View Matrix = \begin{bmatrix}
+\text{View Matrix} = \begin{bmatrix}
 R_x & R_y & R_z & -Eye _x \\
 U_x & U_y & U_z & -Eye _y \\
 F_x & F_y & F_z & -Eye _z \\
 0 & 0 & 0 & 1 
-end{bmatrix}
-\end{aligned}
+\end{bmatrix}
 $$
 
 
@@ -167,28 +163,24 @@ $$
 	- 직교 투영 행렬 (Orthographic Projection Matrix)
 	
 $$
-\begin{aligned}
-Orthographic Matrix = \begin{bmatrix} 
+\text{Orthographic Matrix} = \begin{bmatrix} 
 \frac{2}{Width} & 0 & 0 & 0 \\
 0 & \frac{2}{Height} & 0 & 0 \\
 0 & 0 & \frac{1}{FarZ - NearZ} & 0 \\
 0 & 0 & -\frac{NearZ}{FarZ - NearZ} & 1 
 \end{bmatrix}
-\end{aligned}
 $$
 
 
 	- 원근 투영 행렬 (Perspective Projection Matrix)
 
 $$
-\begin{aligned} 
-Perspective Matrix = \begin{bmatrix} 
+\text{Perspective Matrix} = \begin{bmatrix} 
 \frac {1} {Aspect \cdot \tan (\frac {Fov} {2})} & 0 & 0 & 0 \\ 
 0 & \frac {1} {\tan (\frac {Fov} {2})} & 0 & 0 \\
 0 & 0 & \frac {FarZ} {FarZ - NearZ} & 1 \\
 0 & 0 & -\frac {NearZ \cdot FarZ} {FarZ - NearZ} & 0
 \end{bmatrix}
-\end{aligned}
 $$
 
 
