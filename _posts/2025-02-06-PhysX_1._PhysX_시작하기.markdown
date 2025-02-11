@@ -1,0 +1,133 @@
+---
+layout: post
+title: PhysX 1. PhysX 시작하기
+date: 2025-02-06 09:00:00 +0900
+category: PhysX
+---
+
+## 1. PhysX 시작하기
+
+
+
+---
+
+<br><br>
+
+>### 1. PhysX란?
+
+PhysX 는 NVIDIA 에서 제공하는 물리 엔진 SDK로, Unity 나 Unreal Engine 4 에도 사용되는 물리 연산 시뮬레이터이다.
+
+PhysX 는 Actor 라고 불리는 오브젝트 단위로 Scene 에서 각 액터의 물리적 상호작용 등을 시뮬레이션하며, 액터는 RigidBody, Particle 등 여러 종류가 존재한다.
+
+
+
+---
+
+<br><br>
+
+>### 2. PhysX 기본 설정
+
+
+```cpp
+
+class CPhysxMgr
+	: public Singleton<CPhysxMgr>
+{
+	friend class CPhysxActor;
+public:
+	SINGLE(CPhysxMgr);
+
+private:
+	// 초기화 데이터
+	PxDefaultAllocator					m_DefaultAllocatorCallback;
+	PxDefaultErrorCallback				m_DefaultErrorCallback;
+	PxDefaultCpuDispatcher*				m_Dispatcher;
+	PxTolerancesScale					m_ToleranceScale;
+
+	PxFoundation*						m_Foundation;
+	PxPhysics*							m_Physics;
+
+	PxScene*							m_Scene;
+
+	// 시뮬레이션 대상 관리 컨테이너
+	map<CGameObject*, PxRigidActor*>	m_mapRigidBody;
+
+	// 디버그용 셰이더
+	Ptr<CGraphicShader>					m_Shader;
+
+	// 충돌 이벤트 처리 객체
+	CSimulationEvent*					m_EventCallback;
+
+public:
+	void Init();
+	void Tick();
+	void Render();
+
+	PxRigidActor* FindRigidBody(CGameObject* _Object);
+	void RemoveRigidBody(CGameObject* _Object);
+};
+
+```
+
+<br>
+
+|자료형|설명|
+|---|---|
+|PxDefaultAllocator|PhysX 엔진에서 기본적으로 제공하는 메모리 할당자. PxAllocatorCallback을 구현한 클래스이며, PhysX 내부에서 동적 메모리를 할당할 때 사용된다.|
+|PxDefaultErrorCallback|PhysX에서 오류 메시지를 출력하는 기본 콜백 클래스. PxErrorCallback을 구현한 클래스이며, PhysX 내부에서 오류가 발생하면 자동으로 호출된다.|
+|PxDefaultCpuDispatcher|PhysX에서 멀티스레드 작업을 처리하는 기본 CPU 디스패처. PhysX의 PxScene에서 충돌 검사 및 시뮬레이션 작업을 여러 스레드에 분배하는 역할을 한다.|
+|PxTolerancesScale|PhysX에서 사용하는 물리 시뮬레이션의 스케일(단위 계수) 을 설정하는 구조체. PhysX 내부에서 부동소수점 연산의 안정성을 유지할 수 있도록 여러 물리 계산에 적용된다.|
+|PxFoundation|PhysX의 핵심 엔진을 초기화하는 기반 객체. PhysX 엔진의 모든 **주요 시스템**(PxPhysics, PxCooking, PxPvd 등)은 PxFoundation을 기반으로 생성된다.|
+|PxPhysics|PhysX의 핵심 물리 엔진 객체로, 물리 시뮬레이션을 관리하는 중심 요소. 모든 **물리 관련 객체**(PxScene, PxRigidDynamic, PxRigidStatic, PxMaterial 등)는 PxPhysics를 통해 생성된다.|
+|PxScene|PhysX의 물리 시뮬레이션을 실행하는 공간. 물리 객체(PxRigidDynamic, PxRigidStatic)를 배치하고, 중력과 충돌을 처리하며, PxScene 내부에서 프레임마다 물리 연산을 수행(simulate(), fetchResults())한다.|
+|CSimulationEvent|PhysX에서 발생하는 충돌, 트리거, 웨이크/슬립 이벤트를 처리하는 클래스. PxSimulationEventCallback 인터페이스를 상속받아 구현할 수 있다.|
+
+<br>
+
+초기화는 아래와 같이 진행된다.
+
+단, 디버그 렌더링과 충돌 이벤트 콜백 등록은 선택사항이다.
+
+<br>
+
+```cpp
+
+void CPhysxMgr::Init()
+{
+    // physx 초기화
+    m_Foundation = PxCreateFoundation(PX_PHYSICS_VERSION, m_DefaultAllocatorCallback, m_DefaultErrorCallback);
+    if (!m_Foundation) throw("PxCreateFoundation failed!");
+    m_ToleranceScale.length = 1.f;
+    m_ToleranceScale.speed = 400.f;
+    m_Physics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_Foundation, m_ToleranceScale);
+
+    PxSceneDesc sceneDesc(m_Physics->getTolerancesScale());
+    sceneDesc.gravity = PxVec3(0.f, -400.f, 0.f);
+    m_Dispatcher = PxDefaultCpuDispatcherCreate(2);
+    sceneDesc.cpuDispatcher = m_Dispatcher;
+    sceneDesc.filterShader = FilterShaderExample;
+    sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
+    m_Scene = m_Physics->createScene(sceneDesc);
+
+    // 디버그 렌더링 목록
+    m_Scene->setVisualizationParameter(PxVisualizationParameter::eSCALE, 1.0f);
+    m_Scene->setVisualizationParameter(PxVisualizationParameter::eBODY_AXES, 10.0f);
+    m_Scene->setVisualizationParameter(PxVisualizationParameter::eCOLLISION_SHAPES, 1.0f);
+
+    // 충돌 이벤트 콜백 등록
+    m_EventCallback = new CSimulationEvent;
+    m_Scene->setSimulationEventCallback(m_EventCallback);
+
+    // physx 디버그용 셰이더 컴파일
+    m_Shader = new CGraphicShader;
+
+    m_Shader->CreateVertexShader(L"HLSL\\PhysxDebug.fx", "VS_PhysxDebug");
+    m_Shader->CreatePixelShader(L"HLSL\\PhysxDebug.fx", "PS_PhysxDebug");
+    m_Shader->SetDomain(SHADER_DOMAIN::DOMAIN_DEBUG);
+    m_Shader->SetRSType(RS_TYPE::CULL_NONE);
+    m_Shader->SetDSType(DS_TYPE::LESS);
+    m_Shader->SetBSType(BS_TYPE::ALPHABLEND);
+    m_Shader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+}
+
+```
