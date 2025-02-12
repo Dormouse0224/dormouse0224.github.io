@@ -1,0 +1,93 @@
+---
+layout: post
+title: DirectX 8. 텍스처, 뷰, 샘플러
+date: 2025-02-12 09:00:00 +0900
+category: DirectX
+---
+
+## 8. 텍스처
+
+1. [Texture2D 와 View](#1-texture2d-와-view)
+2. [UV 좌표계](#2-uv-좌표계)
+3. [샘플러](#3-샘플러)
+
+---
+
+<br><br>
+
+>### 1. Texture2D 와 View
+
+DirectX 에서 Texture2D와 View는 그래픽 리소스를 다루는 핵심 요소이다.
+
+Texture2D는 GPU에서 사용하는 2D 텍스처 리소스로, 일반적으로 이미지 데이터를 저장하는 데 많이 사용되며, 렌더링 파이프라인에 바인딩되어 사용된다.
+
+<br>
+
+**Texture2D**
+
+- 2D 좌표 형태로 픽셀 데이터를 저장.
+- UV 좌표로 텍스처의 특정 위치에 접근 가능. (DirectX의 경우 좌상단으로부터 0 ~ 1 범위)
+- Pixel Shader 단계에서 UV 좌표로 텍스처의 픽셀을 샘플링
+- 일반적인 그래픽 리소스(Shader Resource), 렌더링 결과를 저장하는 용도(Render Target), 깊이 값을 저장하는 용도(Depth Stencil) 등으로 사용 가능
+
+<br>
+
+DirectX에서 View(뷰) 는 Texture2D, Texture3D, Buffer 같은 리소스를 특정 용도로 사용할 수 있도록 정의하는 객체이다.
+
+View를 사용해 같은 리소스를 여러 방식으로 활용할 수 있으며, View는 셰이더에 해당 리소스를 어떻게 사용할 지 설명해주는 전달자 역할을 한다.
+
+Unordered Access View (UAV) 의 경우, 주로 컴퓨트 셰이더에서 사용되며, 읽기 뿐만 아니라 쓰기 접근도 허용된다.
+
+<br>
+
+|View 이름|약어|역할|
+|---|---|---|
+|Shader Resource View|SRV|쉐이더에서 읽기용 (텍스처, 버퍼 샘플링)|
+|Render Target View|RTV|렌더링 결과를 출력하는 대상|
+|Depth Stencil View|DSV|깊이(Depth) 및 스텐실(Stencil) 테스트 용도|
+|Unordered Access View|UAV|랜덤 읽기/쓰기 가능 (Compute Shader, RWTexture 지원)|
+
+---
+
+<br><br>
+
+>### 2. UV 좌표계
+
+UV 좌표는 텍스처 매핑을 위해 사용되는 2D 좌표이다.
+
+U 좌표가 x축, V 좌표가 y축이 되며, DirectX 에서는 좌측 상단을 원점으로 오른쪽과 아래쪽이 양의 방향이다.
+
+범위는 [0, 1]로, 해당 범위를 넘어가면 샘플링 규칙에 따라 좌표가 조정된다.
+
+각 정점마다 UV 좌표가 설정되며, 이후 래스터라이저에서 선형 보간 처리 후 픽셀 셰이더에 픽셀이 샘플링할 텍스처 상의 보간된 UV 좌표가 전달된다.
+
+---
+
+<br><br>
+
+>### 3. 샘플러
+
+샘플러(Sampler)는 그래픽스 프로그래밍에서 텍스처를 샘플링하는 방법을 제어하는 객체이다.
+
+DirectX 에서는 s 레지스터에 바인딩되어 그래픽 파이프라인으로 전달되며, 픽셀 셰이더 단계에서 s 레지스터에 바인딩된 샘플러에 따라 텍스처에서 UV 좌표 위치의 색상을 추출한다.
+
+<br>
+
+**샘플러의 주요 속성**
+
+
+1. 필터링 방식 (Filtering Mode):
+
+- 포인트 필터링 (Point Filtering): 가장 가까운 텍스처 샘플만 사용하여 텍스처를 샘플링한다.
+- 선형 필터링 (Linear Filtering): 여러 텍스처 샘플을 보간하여 텍스처의 품질을 높인다.
+- 비등방성 필터링 (Anisotropic Filtering): 비스듬한 각도에서 텍스처의 품질을 높여준다.
+
+2. 랩핑 방식 (Wrapping Mode):
+
+- 클램프 (Clamp): 텍스처 좌표가 범위를 벗어나면 가장자리를 반복해서 사용한다.
+- 랩 (Wrap): 텍스처 좌표가 범위를 벗어나면 텍스처를 계속해서 반복한다.
+- 미러랩 (Mirror Wrap): 텍스처 좌표가 범위를 벗어나면 텍스처가 반사되며 반복된다.
+
+3. MipMapping:
+
+- 텍스처가 여러 수준의 디테일을 가진 Mipmap을 사용할 수 있도록 설정한다. 텍스처가 카메라에서 멀어질수록 낮은 해상도의 Mipmap 레벨을 사용할 수 있다.
