@@ -1,0 +1,232 @@
+---
+layout: post
+title: C++ 18. 템플릿 특수화, constexpr
+date: 2025-02-13 09:00:00 +0900
+category: C++
+---
+
+## 18. 템플릿 특수화, constexpr
+
+1. [템플릿 특수화 (Template Specialization)](#1-템플릿-특수화-template-specialization)
+2. [constexpr](#2-constexpr)
+3. [활용](#3-활용)
+
+---
+
+<br><br>
+
+>### 1. 템플릿 특수화 (Template Specialization)
+
+템플릿 특수화는 C++의 템플릿 기능 중 하나로, 특정 타입에 대해 템플릿의 동작을 다르게 정의하는 방법이다. 이를 통해 일반적인 템플릿을 사용하면서도 특정 타입에 대한 맞춤형 구현을 제공할 수 있다.
+
+템플릿 특수화는 **특정 타입에 대해 별도의 동작을 구현하려 할 때** 사용된다.
+
+<br>
+
+    **일반 템플릿**
+
+```cpp
+
+template <typename T>
+class MyClass {
+public:
+    void Show() {
+        cout << "일반 템플릿" << endl;
+    }
+};
+
+```
+
+<br>
+
+    **명시적 특수화**
+
+특정 타입에 대해 별도의 동작을 구현한다.
+
+```cpp
+
+template <>
+class MyClass<int> {
+public:
+    void Show() {
+        cout << "int 타입 특수화" << endl;
+    }
+};
+
+```
+
+<br>
+
+    **부분 특수화**
+
+여러 템플릿 인자 중 일부만 특정 타입으로 구현할 때 사용된다.
+
+```cpp
+
+template <typename T1, typename T2>
+class MyClass {
+public:
+    void Show() {
+        cout << "일반 템플릿" << endl;
+    }
+};
+
+// 두 번째 타입이 int인 경우 특수화
+template <typename T1>
+class MyClass<T1, int> {
+public:
+    void Show() {
+        cout << "두 번째 타입이 int일 때 특수화" << endl;
+    }
+};
+
+```
+
+<br>
+
+    **멤버 함수 특수화**
+
+특정 멤버 함수만 특수화할 수도 있다.
+
+```cpp
+
+template <typename T>
+class MyClass {
+public:
+    void Show() {
+        cout << "일반 템플릿" << endl;
+    }
+};
+
+// int 타입에 대해서만 Show 함수 특수화
+template <>
+void MyClass<int>::Show() {
+    cout << "int 타입 특수화" << endl;
+}
+
+```
+
+<br>
+
+    **함수 템플릿 특수화**
+
+클래스 뿐만 아니라 함수도 템플릿 특수화가 가능하다.
+
+```cpp
+
+template <typename T>
+void Print(T value) {
+    cout << "일반 템플릿: " << value << endl;
+}
+
+// int 타입에 대한 특수화
+template <>
+void Print<int>(int value) {
+    cout << "int 특수화: " << value << endl;
+}
+
+```
+
+---
+
+<br><br>
+
+>### 2. constexpr
+
+constexpr은 **컴파일 타임에 값을 결정할 수 있는 상수 표현**을 만들기 위해 사용된다.
+
+일반적인 const 타입은 해당 라인이 실행될 때 상수화가 된다면, constexpr 의 경우 컴파일 타임에 상수화가 되어 값이 결정된다.
+
+<br>
+
+    constexpr 변수
+
+constexpr 변수는 **반드시** 컴파일 타임에 값이 결정되어야 한다. 따라서 반드시 constexpr 또는 리터럴 값으로 초기화해야 한다.
+
+```cpp
+
+constexpr int x = 10;  // 컴파일 타임 상수
+constexpr double y = 3.14;  // 가능
+
+int main() {
+    constexpr int z = x + 5;  // 컴파일 타임 연산 가능
+
+    int a = 10;
+    constexpr int b = a + 5;  // a는 런타임 변수라서 constexpr로 선언 불가, 컴파일 에러
+    return 0;
+}
+
+```
+
+<br>
+
+    constexpr 함수
+
+C++11부터 함수도 컴파일 타임에 실행될 수 있도록 constexpr 함수가 추가되었다.
+
+이후, C++11에서는 constexpr 함수가 반드시 컴파일 타임에 실행되어야 했지만, C++14부터는 **런타임에서도 사용 가능**하도록 변경되었다.
+
+```cpp
+
+constexpr int Square(int x) {
+    return x * x;
+}
+
+int main() {
+    constexpr int result = Square(5);  // 컴파일 타임 연산
+    int num = 10;
+    int runtime_result = Square(num);  // 런타임 연산 (C++14부터 가능)
+    return 0;
+}
+
+```
+
+<br>
+
+    if constexpr 조건문
+
+C++17부터는 컴파일 타임 조건문인 if constexpr이 추가되어 조건에 따라 코드를 제거할 수 있다.
+
+*(예시 코드는 아래 활용 참고)*
+
+
+---
+
+<br><br>
+
+>### 3. 활용
+
+템플릿 특수화와 constexpr을 활용하여 타입 비교를 구현할 수 있다.
+
+<br>
+
+```cpp
+
+template <class, class>
+constexpr bool is_same_v = false; // 기본 템플릿은 무조건 false를 반환한다.
+template <class _Ty>
+constexpr bool is_same_v<_Ty, _Ty> = true;  // 템플릿 특수화로 같은 타입 두개가 입력되었을 때 true를 반환하도록 한다.
+
+// 타입을 비교하여 결과를 반환해 주는 함수.
+template<typename T>
+ASSET_TYPE GetAssetType()
+{
+	if constexpr (is_same_v<CMesh, T>)
+		return MESH;
+	else if constexpr (is_same_v<CTexture, T>)
+		return TEXTURE;
+	else if constexpr (is_same_v<CMaterial, T>)
+		return MATERIAL;
+	else if constexpr (is_same_v<CGraphicShader, T>)
+		return GRAPHIC_SHADER;
+	else if constexpr (is_same_v<CComputeShader, T>)
+		return COMPUTE_SHADER;
+	else if constexpr (is_same_v<CSprite, T>)
+		return SPRITE;
+	else if constexpr (is_same_v<CFlipbook, T>)
+		return FLIPBOOK;
+}
+
+```
+
+---

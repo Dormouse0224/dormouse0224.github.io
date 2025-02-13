@@ -104,12 +104,12 @@ DirectX와 HLSL에서 **레지스터(Register)**는 GPU 메모리와 셰이더 �
 
 <br>
 
-|리소스 타입|레지스터 접두사|설명|
+|레지스터 이름|설명|주요 바인딩 데이터|
 |---|---|---|
-|상수 버퍼|b|상수 데이터가 저장된 버퍼|
-|텍스처|t|2D/3D 텍스처, 텍스처 배열, 구조화 버퍼 등|
-|샘플러|s|텍스처를 샘플링하는 데 사용하는 리소스|
-|순서가 지정되지 않은 액세스 리소스|u|UAV(Unordered Access View) 리소스|
+|b 레지스터|Constant Buffer(CBuffer)를 바인딩하는 레지스터|행렬(Matrix), 벡터(Vector), 스칼라(Scalar) 버퍼 등 상수 버퍼|
+|t 레지스터|텍스처(Texture) 및 구조화 버퍼(Structured Buffer) 같은 리소스를 **읽기 전용**으로 바인딩하는 레지스터|2D/3D 텍스처, 구조화 버퍼|
+|s 레지스터|텍스처 샘플링 시, 필터링(Filters), 래핑 모드(Wrapping Mode), 바운딩 모드 등을 설정하는 샘플러(Sampler State) 를 바인딩하는 레지스터|샘플러|
+|u 레지스터|텍스처 또는 버퍼를 읽기/쓰기(Read/Write) 가능하도록 바인딩하는 레지스터|RWTexture2D, RWBuffer, RWStructuredBuffer 등 읽고 쓰기가 가능한 버퍼|
 
 <br>
 
