@@ -76,44 +76,34 @@ category: Project_Sanabi
 
 > **Asset**
 
-<details>
-  <summary>펼치기</summary> 
-
-  |작업 대상|작업 내용|작업 현황|
-  |---|---|---|
-  |모든 Asset|파일 저장 및 불러오기|❌ Incomplete|
-  |Mesh|프리뷰 이미지에서 드래그로 프리뷰 카메라를 조작하는 기능|❌ Incomplete|
-  |Mesh|프리뷰 토폴로지를 변경시키는 기능|❌ Incomplete|
-  |Sound|소리를 미리 들어보는 기능|❌ Incomplete|
-  |Graphic Shader|셰이더의 각종 옵션(토폴로지, 렌더 도메인, 각 스테이트)을 변경하는 기능|❌ Incomplete|
-  |Compute Shader|컴퓨트 셰이더의 속성(텍스쳐 또는 상수 데이터) 조정 기능|❌ Incomplete|
-  |Prefab|기존 오브젝트를 프리펩으로 만드는 기능|❌ Incomplete|
-  |Prefab|프리펩을 레벨에 오브젝트로 배치하는 기능|❌ Incomplete|
-  |Sprite|새로운 스프라이트를 생성하거나 기존 스프라이트를 편집하는 기능|❌ Incomplete|
-  |Flipbook|플립북에 씬을 추가하거나 제거하는 기능|❌ Incomplete|
-  |Flipbook|플립북의 각 씬 속성을 편집하는 기능|❌ Incomplete|
-  |Level|레벨을 새로 생성하고 오브젝트를 추가하는 기능|❌ Incomplete|
-  |State|FSM 컴포넌트와 연계|❌ Incomplete|
-
-</details>
+|작업 대상|작업 내용|작업 현황|
+|---|---|---|
+|모든 Asset|파일 저장 및 불러오기|❌ Incomplete|
+|Mesh|프리뷰 이미지에서 드래그로 프리뷰 카메라를 조작하는 기능|❌ Incomplete|
+|Mesh|프리뷰 토폴로지를 변경시키는 기능|❌ Incomplete|
+|Sound|소리를 미리 들어보는 기능|❌ Incomplete|
+|Graphic Shader|셰이더의 각종 옵션(토폴로지, 렌더 도메인, 각 스테이트)을 변경하는 기능|❌ Incomplete|
+|Compute Shader|컴퓨트 셰이더의 속성(텍스쳐 또는 상수 데이터) 조정 기능|❌ Incomplete|
+|Prefab|기존 오브젝트를 프리펩으로 만드는 기능|❌ Incomplete|
+|Prefab|프리펩을 레벨에 오브젝트로 배치하는 기능|❌ Incomplete|
+|Sprite|새로운 스프라이트를 생성하거나 기존 스프라이트를 편집하는 기능|❌ Incomplete|
+|Flipbook|플립북에 씬을 추가하거나 제거하는 기능|❌ Incomplete|
+|Flipbook|플립북의 각 씬 속성을 편집하는 기능|❌ Incomplete|
+|Level|레벨을 새로 생성하고 오브젝트를 추가하는 기능|❌ Incomplete|
+|State|FSM 컴포넌트와 연계|❌ Incomplete|
 
 <br>
 
 > **Component**
 
-<details>
-  <summary>펼치기</summary> 
-
-  |작업 대상||작업 목록|작업 현황|
-  |---|---|---|
-  |모든 Component|컴포넌트를 오브젝트에 추가하는 기능|❌ Incomplete|
-  |PhysX|액터의 각 물리적 속성을 편집하는 기능|❌ Incomplete|
-  |PhysX|충돌 이벤트 콜백|❌ Incomplete|
-  |FSM|각 상태와 상태 전환 조건을 편집하는 기능|❌ Incomplete|
-  |FSM|State 스크립트를 FSM 에 등록하는 기능|❌ Incomplete|
-  |Button|버튼에 연결할 이벤트 함수를 스트립트로부터 설정하는 기능|❌ Incomplete|
-
-</details>
+|작업 대상||작업 목록|작업 현황|
+|---|---|---|
+|모든 Component|컴포넌트를 오브젝트에 추가하는 기능|❌ Incomplete|
+|PhysX|액터의 각 물리적 속성을 편집하는 기능|❌ Incomplete|
+|PhysX|충돌 이벤트 콜백|❌ Incomplete|
+|FSM|각 상태와 상태 전환 조건을 편집하는 기능|❌ Incomplete|
+|FSM|State 스크립트를 FSM 에 등록하는 기능|❌ Incomplete|
+|Button|버튼에 연결할 이벤트 함수를 스트립트로부터 설정하는 기능|❌ Incomplete|
 
 <br>
 
