@@ -96,7 +96,7 @@ category: Project_Sanabi
 
 > **Component**
 
-|작업 대상||작업 목록|작업 현황|
+|작업 대상|작업 내용|작업 현황|
 |---|---|---|
 |모든 Component|컴포넌트를 오브젝트에 추가하는 기능|❌ Incomplete|
 |PhysX|액터의 각 물리적 속성을 편집하는 기능|❌ Incomplete|
