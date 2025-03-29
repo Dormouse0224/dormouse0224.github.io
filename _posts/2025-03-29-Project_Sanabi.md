@@ -77,7 +77,7 @@ category: Project_Sanabi
 > **Asset**
 
 <details>
-  <summary>펼치기/접기</summary> 
+  <summary>펼치기</summary> 
 
   |작업 대상|작업 내용|작업 현황|
   |---|---|---|
@@ -94,7 +94,7 @@ category: Project_Sanabi
   |Flipbook|플립북의 각 씬 속성을 편집하는 기능|❌ Incomplete|
   |Level|레벨을 새로 생성하고 오브젝트를 추가하는 기능|❌ Incomplete|
   |State|FSM 컴포넌트와 연계|❌ Incomplete|
-  
+
 </details>
 
 <br>
@@ -102,7 +102,7 @@ category: Project_Sanabi
 > **Component**
 
 <details>
-  <summary>펼치기/접기</summary> 
+  <summary>펼치기</summary> 
 
   |작업 대상||작업 목록|작업 현황|
   |---|---|---|
