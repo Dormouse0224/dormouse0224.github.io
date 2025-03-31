@@ -80,8 +80,8 @@ category: Project_Sanabi
 
 |작업 대상|작업 내용|작업 현황|
 |---|---|---|
-|Object|오브젝트를 레벨에 추가하는 기능|❌ Incomplete|
-|Object|오브젝트와 프리펩 간 전환|⏳ In Progress|
+|Object|오브젝트를 레벨에 추가하는 기능|⏳ In Progress|
+|Object|오브젝트와 프리펩 간 전환|✅ Completed|
 
 <br>
 
