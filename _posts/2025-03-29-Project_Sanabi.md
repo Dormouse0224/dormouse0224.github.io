@@ -82,6 +82,7 @@ category: Project_Sanabi
 |---|---|---|
 |Object|오브젝트를 레벨에 추가하는 기능|✅ Completed|
 |Object|오브젝트와 프리펩 간 전환|✅ Completed|
+|Object|Object 데이터 및 컴포넌트 저장 및 불러오기|⏳ In Progress|
 
 <br>
 
