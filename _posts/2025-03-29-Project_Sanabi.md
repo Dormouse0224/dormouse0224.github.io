@@ -111,7 +111,7 @@ category: Project_Sanabi
 |작업 대상|작업 내용|작업 현황|
 |---|---|---|
 |모든 Component|컴포넌트를 오브젝트에 추가하는 기능|❌ Incomplete|
-|Collider2D|컴포넌트 제거 - 충돌 관련 기능 PhysX로 통합|✅ Completed|
+|Collider2D|컴포넌트 제거 - 충돌 관련 기능 PhysX로 통합|❌ Incomplete|
 |PhysX|액터의 각 물리적 속성을 편집하는 기능|❌ Incomplete|
 |PhysX|충돌 이벤트 콜백|❌ Incomplete|
 |FSM|각 상태와 상태 전환 조건을 편집하는 기능|❌ Incomplete|
