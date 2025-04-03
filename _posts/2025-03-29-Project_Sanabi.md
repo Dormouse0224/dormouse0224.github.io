@@ -82,7 +82,7 @@ category: Project_Sanabi
 |---|---|---|
 |Object|오브젝트를 레벨에 추가하는 기능|✅ Completed|
 |Object|오브젝트와 프리펩 간 전환|✅ Completed|
-|Object|Object 데이터 및 컴포넌트 저장 및 불러오기|⏳ In Progress|
+|Object|Object 데이터 및 컴포넌트 저장 및 불러오기|✅ Completed|
 
 <br>
 
@@ -90,7 +90,7 @@ category: Project_Sanabi
 
 |작업 대상|작업 내용|작업 현황|
 |---|---|---|
-|모든 Asset|파일 저장 및 불러오기|⏳ In Progress|
+|모든 Asset|파일 저장 및 불러오기|✅ Completed|
 |Mesh|프리뷰 이미지에서 드래그로 프리뷰 카메라를 조작하는 기능|❌ Incomplete|
 |Mesh|프리뷰 토폴로지를 변경시키는 기능|❌ Incomplete|
 |Sound|소리를 미리 들어보는 기능|❌ Incomplete|
