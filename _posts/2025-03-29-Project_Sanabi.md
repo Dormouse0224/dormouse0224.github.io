@@ -113,8 +113,8 @@ category: Project_Sanabi
 |모든 Component|컴포넌트 저장 및 불러오기|✅ Completed|
 |모든 Component|컴포넌트를 오브젝트에 추가하는 기능|❌ Incomplete|
 |Collider2D|컴포넌트 제거 - 충돌 관련 기능 PhysX로 통합|❌ Incomplete|
-|PhysX|액터의 각 물리적 속성을 편집하는 기능|❌ Incomplete|
-|PhysX|충돌 이벤트 콜백|❌ Incomplete|
+|PhysX|액터의 각 물리적 속성을 편집하는 기능|✅ Completed|
+|PhysX|충돌 이벤트 콜백|✅ Completed|
 |FSM|각 상태와 상태 전환 조건을 편집하는 기능|❌ Incomplete|
 |FSM|State 스크립트를 FSM 에 등록하는 기능|❌ Incomplete|
 |Button|버튼에 연결할 이벤트 함수를 스트립트로부터 설정하는 기능|❌ Incomplete|
@@ -129,6 +129,7 @@ category: Project_Sanabi
 |Level|레벨 저장/불러오기/복사 및 상태 전환 구현|✅ Completed|
 |Clone|복사 생성자 구현|✅ Completed|
 |TileRender|타일 렌더링 구조 변경|✅ Completed|
+|Transform|회전 방식을 오일러 회전에서 쿼터니언 회전으로 변경|✅ Completed|
 
 
 <br>
