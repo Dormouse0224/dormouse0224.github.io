@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Project Sanabi 2. 1주차 진행사항
-date: 2025-04-07 09:00:00 +0900
+date: 2025-04-06 09:00:00 +0900
 category: Project_Sanabi
 ---
 
