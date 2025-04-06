@@ -72,6 +72,8 @@ category: Project_Sanabi
 - 레벨 및 맵을 Editor UI를 통해 작성이 가능한 단계까지를 최종 목표로 한다.
 
 
+[**1주차 진행사항 >>**](https://dormouse0224.github.io/project_sanabi/2025/04/06/Project_Sanabi_2._1%EC%A3%BC%EC%B0%A8-%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
+
 <br>
 
 
