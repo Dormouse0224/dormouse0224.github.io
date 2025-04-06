@@ -7,10 +7,10 @@ category: Project_Sanabi
 
 ## 2. 1주차 진행사항
 
-1. Editor UI
-2. PhysX 충돌 이벤트 구조
-3. FSM 동작 구조
-0. 작업 목록
+1. [Editor UI](#1-editor-ui)
+2. [PhysX 충돌 이벤트 구조](#2-physx-충돌-이벤트-구조)
+3. [FSM 동작 구조](#3-fsm-동작-구조)
+0. [작업 목록](#0-작업-목록)
 
 
 ---
