@@ -98,7 +98,7 @@ category: Project_Sanabi
 |FSM|State 클래스와 Trigger 함수로 구현|✅ Completed|
 |State|FSM 컴포넌트와 연계|✅ Completed|
 |Button|버튼에 연결할 이벤트 함수를 스트립트로부터 설정하는 기능|⏳ In Progress|
-|TileRender|타일 편집기|❌ Incomplete|
+|TileRender|타일 편집기|✅ Completed|
 
 <br>
 
@@ -107,7 +107,7 @@ category: Project_Sanabi
 |작업 대상|작업 내용|작업 현황|
 |---|---|---|
 |Level|시작 레벨 만들기|⏳ In Progress|
-|Level|스테이지 만들기|❌ Incomplete|
+|Level|스테이지 만들기|⏳ In Progress|
 
 <br>
 
