@@ -41,7 +41,7 @@ category: Project_Sanabi
 
 >### 2. FSM Editor
 
-![alt text](public\img\FSM_Editor.png)
+![alt text](\public\img\FSM_Editor.png)
 
  - Engine 라이브러리를 사용하는 외부 라이브러리에서 State 클래스를 상속받아 상태를 스크립트처럼 구현하고 추가할 수 있도록 함.
 
@@ -58,11 +58,11 @@ category: Project_Sanabi
 
 >### 3. Tile, Collider Editor
 
-![alt text](public\img\Tile_Editor.png)
+![alt text](\public\img\Tile_Editor.png)
 
  - Tile 크기와 해당 타일맵에서 사용하는 아틀라스 이미지를 고르고, 에디터를 통해 타일 스프라이트를 선택해서 브러시처럼 타일을 배치할 수 있음.
 
-![alt text](public\img\Collider_Editor.png)
+![alt text](\public\img\Collider_Editor.png)
 
  - 충돌체의 속성(시뮬레이션/쿼리/트리거) 설정 및 충돌 대상 레이어 선택, 크기 와 오프셋을 입력받아 강체에 추가할 수 있음
 
@@ -74,7 +74,7 @@ category: Project_Sanabi
 
 >### 4. UI 오브젝트
 
-![alt text](public\img\UI_Object.png)
+![alt text](\public\img\UI_Object.png)
 
  - FSM과 비슷한 구조로, 외부 라이브러리에서 스크립트로 구현된 이벤트 함수를 등록받아 클릭/키다운 시 해당 이벤트 함수를 호출해 준다.
 
