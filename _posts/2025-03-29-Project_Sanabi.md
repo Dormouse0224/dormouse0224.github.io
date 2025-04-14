@@ -91,42 +91,7 @@ category: Project_Sanabi
 
 - 실제 스테이지의 전환 등 게임의 기능적인 부분의 플레이가 가능한 단계를 최종 목표로 한다.
 
-> **Editor**
-
-|작업 대상|작업 내용|작업 현황|
-|---|---|---|
-|FSM|State 클래스와 Trigger 함수로 구현|✅ Completed|
-|State|FSM 컴포넌트와 연계|✅ Completed|
-|Button|버튼에 연결할 이벤트 함수를 스트립트로부터 설정하는 기능|⏳ In Progress|
-|TileRender|타일 편집기|✅ Completed|
-
-<br>
-
-> **Level**
-
-|작업 대상|작업 내용|작업 현황|
-|---|---|---|
-|Level|시작 레벨 만들기|⏳ In Progress|
-|Level|스테이지 만들기|⏳ In Progress|
-
-<br>
-
-> **Player/Monster**
-
-|작업 대상|작업 내용|작업 현황|
-|---|---|---|
-|Player|기본 이동 구현 (이동, 점프, 벽 점프, 등반)|❌ Incomplete|
-|Player|로프 액션 구현|❌ Incomplete|
-|Monster|Player 와 공격 상호작용|❌ Incomplete|
-
-<br>
-
-> **기타 작업**
-
-|작업 대상|작업 내용|작업 현황|
-|---|---|---|
-|AssetMgr|FindAsset 을 Load 로 대체|✅ Completed|
-
+[**2주차 진행사항 >>**]
 
 <br>
 
