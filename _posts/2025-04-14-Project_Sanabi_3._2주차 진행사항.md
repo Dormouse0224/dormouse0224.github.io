@@ -18,6 +18,18 @@ category: Project_Sanabi
 
 <br><br>
 
+1주차에서 미진했던 에디터의 보충 제작으로 인해 시간이 소요되어 아직 플레이어 / 몬스터 제작을 시작하지 못함.
+
+다만, 스테이지 관련 에디터는 구현이 끝나 각 레벨은 제작만 하면 됨. (텍스트 렌더링 오류는 해결 필요)
+
+3주차는 일단 플레이 가능한 데모 스테이지를 제작하는 것을 목표로 한다.
+
+
+
+---
+
+<br><br>
+
 >### 1. Editor UI
 
  - Material, Flipbook 을 ImGui를 통해 생성 가능
@@ -28,6 +40,8 @@ category: Project_Sanabi
 <br><br>
 
 >### 2. FSM Editor
+
+![alt text](public\img\FSM_Editor.png)
 
  - Engine 라이브러리를 사용하는 외부 라이브러리에서 State 클래스를 상속받아 상태를 스크립트처럼 구현하고 추가할 수 있도록 함.
 
@@ -44,7 +58,11 @@ category: Project_Sanabi
 
 >### 3. Tile, Collider Editor
 
+![alt text](public\img\Tile_Editor.png)
+
  - Tile 크기와 해당 타일맵에서 사용하는 아틀라스 이미지를 고르고, 에디터를 통해 타일 스프라이트를 선택해서 브러시처럼 타일을 배치할 수 있음.
+
+![alt text](public\img\Collider_Editor.png)
 
  - 충돌체의 속성(시뮬레이션/쿼리/트리거) 설정 및 충돌 대상 레이어 선택, 크기 와 오프셋을 입력받아 강체에 추가할 수 있음
 
@@ -56,10 +74,11 @@ category: Project_Sanabi
 
 >### 4. UI 오브젝트
 
-
-![alt text](\public\img\FSM.png)
+![alt text](public\img\UI_Object.png)
 
  - FSM과 비슷한 구조로, 외부 라이브러리에서 스크립트로 구현된 이벤트 함수를 등록받아 클릭/키다운 시 해당 이벤트 함수를 호출해 준다.
+
+ - 단, ImGui를 통해 선택하는 것이 아닌 스크립트 쪽에서 초기에 등록시켜야 한다.
 
  - 스크립트에서는 UI의 상태를 받아와 추가적인 동작을 정의할 수 있다. (클릭 시 텍스쳐 변경 등)
 
