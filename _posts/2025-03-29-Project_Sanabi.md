@@ -91,7 +91,7 @@ category: Project_Sanabi
 
 - 실제 스테이지의 전환 등 게임의 기능적인 부분의 플레이가 가능한 단계를 최종 목표로 한다. - ❌ 실패
 
-[**2주차 진행사항 >>**]
+[**2주차 진행사항 >>**](https://dormouse0224.github.io/project_sanabi/2025/04/14/Project_Sanabi_3._2%EC%A3%BC%EC%B0%A8-%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
 
 <br>
 
