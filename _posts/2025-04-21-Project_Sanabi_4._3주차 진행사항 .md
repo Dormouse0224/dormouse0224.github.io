@@ -28,7 +28,9 @@ category: Project_Sanabi
 
 ![alt text](\public\img\SNB_Week3_Progress.png)
 
-https://youtu.be/eeRZEjJL50c
+
+<iframe width="560" height="315" src="https://youtu.be/eeRZEjJL50c" 
+frameborder="0" allowfullscreen></iframe>
 
 ---
 
