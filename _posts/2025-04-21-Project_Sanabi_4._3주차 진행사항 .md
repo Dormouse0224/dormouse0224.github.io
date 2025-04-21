@@ -26,6 +26,7 @@ category: Project_Sanabi
 
 스테이지 1 오브젝트 배치중. (진행률 20%, 1일 소요 예상)
 
+![alt text](\public\img\SNB_Week3_Progress.png)
 
 
 ---
