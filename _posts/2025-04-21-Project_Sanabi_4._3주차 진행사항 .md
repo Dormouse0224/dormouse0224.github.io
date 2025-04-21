@@ -28,6 +28,7 @@ category: Project_Sanabi
 
 ![alt text](\public\img\SNB_Week3_Progress.png)
 
+https://youtu.be/eeRZEjJL50c
 
 ---
 
@@ -111,8 +112,6 @@ category: Project_Sanabi
 
 |작업 대상|작업 내용|작업 현황|
 |---|---|---|
-|AssetMgr|FindAsset 을 Load 로 대체|✅ Completed|
-|AssetMgr|Content 자동 로딩 및 동기화|✅ Completed|
 
 
 
