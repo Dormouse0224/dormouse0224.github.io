@@ -104,11 +104,13 @@ category: Project_Sanabi
 
 **3주차 목표**
 
-- 플레이어 / 몬스터 제작
+- 플레이어 / 몬스터 제작 - ✅ 성공
 
-- 스테이지 1 마고특별시 최하층 제작
+- 스테이지 1 마고특별시 최하층 제작 - ⏳ 미흡
 
-- 보스 집행명령 제작
+- 보스 집행명령 제작 - ❌ 실패
+
+[**2주차 진행사항 >>**](https://dormouse0224.github.io/project_sanabi/2025/04/21/Project_Sanabi_4._3%EC%A3%BC%EC%B0%A8-%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
 
 <br>
 
