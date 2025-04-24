@@ -8,10 +8,10 @@ category: Project_Sanabi
 ## 4. 3주차 진행사항
 
 0. [작업 목록](#0-작업-목록)
-1. Player State
-2. Monster - Turret & Battle Gate
-3. Cursor
-4. 4주차 계획
+1. [Player State](#1-player-state)
+2. [Monster - Turret & Battle Gate](#2-monster---turret--battle-gate)
+3. [Cursor](#3-cursor)
+4. [4주차 계획](#4-4주차-계획)
 
 
 ---
@@ -129,7 +129,7 @@ category: Project_Sanabi
 >### 4. 4주차 계획
 
 
-- 보스 구현은 스크립트 작성 노가다로 결과물 대비 시간만 많이 잡아먹을 것 같아 폐기. (플레이어 스크립트도 시간 소요가 컸음)
+- 보스 구현은 스크립트 작성 노가다로 결과물 대비 시간만 많이 잡아먹을 것 같아 단순화하여 구현 예정.
 
 - 포스트 프로세스 이펙트
     1. 몬스터 사망 시 폭팔하는 효과
