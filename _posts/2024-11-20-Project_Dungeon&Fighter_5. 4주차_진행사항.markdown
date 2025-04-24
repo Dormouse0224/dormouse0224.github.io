@@ -27,7 +27,7 @@ category: Project_Dungeon&Fighter
 ![alt text](\public\img\backgroundload.png)
 
 
-- 스레드와 뮤텍스를 활용해 게임 실행 준비 시간을 6분 -> 3분 정도로 줄이고, 평균 프레임을 20FPS -> 50FPS 정도로 늘렸다.
+- 스레드와 뮤텍스를 활용해 게임 실행 준비 시간을 release 기준 3분 -> 30초 정도로 줄이고, 평균 프레임을 20FPS -> 50FPS 정도로 늘렸다.
 
 
 - 로딩 및 프레임 보완에는 다음과 같은 방법을 사용했다:
