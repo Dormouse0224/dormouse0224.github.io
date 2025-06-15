@@ -7,16 +7,16 @@ category: Training
 
 ## Programmers Lv.2 완전범죄
 
-1. [접근]
-2. [풀이]
-3. [코드]
+1. [접근](#1-접근)
+2. [풀이](#2-풀이)
+3. [코드](#3-코드)
 
 
 ---
 
 <br><br>
 
-https://school.programmers.co.kr/learn/courses/30/lessons/389480
+[https://school.programmers.co.kr/learn/courses/30/lessons/389480]
 
 <br>
 
