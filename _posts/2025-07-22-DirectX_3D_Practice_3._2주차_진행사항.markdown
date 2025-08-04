@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Project Wuthering Waves 3. 2주차 진행사항
+title: DirectX 3D Practice 3. 2주차 진행사항
 date: 2025-07-22 12:00:00 +0900
-category: Project_Wuthering_Waves
+category: DirectX_3D_Practice
 ---
 
 ## 3. 2주차 진행사항
