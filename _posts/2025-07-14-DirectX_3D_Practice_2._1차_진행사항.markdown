@@ -1,11 +1,11 @@
 ---
 layout: post
-title: DirectX 3D Practice 2. 1주차 진행사항
+title: DirectX 3D Practice 2. 1차 진행사항
 date: 2025-07-14 12:00:00 +0900
 category: DirectX_3D_Practice
 ---
 
-## 2. 1주차 진행사항
+## 2. 1차 진행사항
 
 1. [3D Light](#1-3d-light)
 2. [Cascade Frustum Culling](#2-cascade-frustum-culling)

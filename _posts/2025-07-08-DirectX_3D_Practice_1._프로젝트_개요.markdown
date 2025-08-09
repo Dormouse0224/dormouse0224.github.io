@@ -58,7 +58,7 @@ DirectX 11 기반 3D 그래픽스를 공부하기 위한 데모 프로젝트입�
 
 <br>
 
-#### - 1주차 (07.08 ~ 07.14)
+#### - 1차 (07.08 ~ 07.14)
 
 > 3D 공간에서의 광원 컴포넌트
 
@@ -66,13 +66,13 @@ DirectX 11 기반 3D 그래픽스를 공부하기 위한 데모 프로젝트입�
 
 > Frustum Culling & Cascade 분할
 
-[**1주차 진행사항**](https://dormouse0224.github.io/directX_3d_practice/2025/07/14/DirectX_3D_Practice_2._1%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
+[**1차 진행사항**](https://dormouse0224.github.io/directX_3d_practice/2025/07/14/DirectX_3D_Practice_2._1%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
 
 ---
 
 <br>
 
-#### - 2주차 (07.15 ~ 07.21)
+#### - 2차 (07.15 ~ 07.21)
 
 > 3가지 광원에 대한 그림자 매핑 구현
 
@@ -80,6 +80,20 @@ DirectX 11 기반 3D 그래픽스를 공부하기 위한 데모 프로젝트입�
 
 > Cube/Default Shadow Mapping
 
-[**2주차 진행사항**](https://dormouse0224.github.io/directX_3d_practice/2025/07/22/DirectX_3D_Practice_3._2%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
+[**2차 진행사항**](https://dormouse0224.github.io/directX_3d_practice/2025/07/22/DirectX_3D_Practice_3._2%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
+
+---
+
+<br>
+
+#### - 3차 (07.22 ~ 08.09)
+
+> 지형 컴포넌트
+
+> 애니메이션 UI
+
+> Leg IK Solver
+
+[**3차 진행사항**]
 
 ---
