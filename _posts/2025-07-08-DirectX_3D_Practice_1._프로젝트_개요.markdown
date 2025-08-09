@@ -66,7 +66,7 @@ DirectX 11 기반 3D 그래픽스를 공부하기 위한 데모 프로젝트입�
 
 > Frustum Culling & Cascade 분할
 
-[**1차 진행사항**](https://dormouse0224.github.io/directX_3d_practice/2025/07/14/DirectX_3D_Practice_2._1%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
+[**1차 진행사항**](https://dormouse0224.github.io/directx_3d_practice/2025/07/14/DirectX_3D_Practice_2._1%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
 
 ---
 
@@ -80,7 +80,7 @@ DirectX 11 기반 3D 그래픽스를 공부하기 위한 데모 프로젝트입�
 
 > Cube/Default Shadow Mapping
 
-[**2차 진행사항**](https://dormouse0224.github.io/directX_3d_practice/2025/07/22/DirectX_3D_Practice_3._2%EC%A3%BC%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
+[**2차 진행사항**](https://dormouse0224.github.io/directx_3d_practice/2025/07/22/DirectX_3D_Practice_3._2%EC%B0%A8_%EC%A7%84%ED%96%89%EC%82%AC%ED%95%AD.html)
 
 ---
 
