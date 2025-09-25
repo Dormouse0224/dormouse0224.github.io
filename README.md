@@ -21,8 +21,8 @@ arcticpenguin@naver.com
 
 💻 Github
 
-https://github.com/Dormouse0224
+[LINK](https://github.com/Dormouse0224)
 
 📝 Portfolio (Notion)
 
-https://brick-ricotta-a4b.notion.site/Portfolio-268d551174a780e1851afb08dead12b2
+[LINK](https://brick-ricotta-a4b.notion.site/Portfolio-268d551174a780e1851afb08dead12b2)
